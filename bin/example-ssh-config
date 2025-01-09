@@ -1,0 +1,50 @@
+Host *
+    TCPKeepAlive yes
+    ServerAliveCountMax 60
+    ServerAliveInterval 60
+    Compression yes
+
+Host mediator1
+     Hostname 10.150.0.218
+     User ubuntu
+     IdentityFile ~/.ssh/id_rsa
+
+Host mediator2
+     Hostname 10.150.1.198
+     User ubuntu
+     IdentityFile ~/.ssh/id_rsa
+
+Host mediator3
+     Hostname 10.150.2.95
+     User ubuntu
+     IdentityFile ~/.ssh/id_rsa
+
+Host node1
+     Hostname 10.150.0.75
+     User ubuntu
+     IdentityFile ~/.ssh/id_rsa
+
+Host node2
+     Hostname 10.150.0.248
+     User ubuntu
+     IdentityFile ~/.ssh/id_rsa
+
+Host node3
+     Hostname 10.150.0.251
+     User ubuntu
+     IdentityFile ~/.ssh/id_rsa
+
+Host node4
+     Hostname 10.150.1.196
+     User ubuntu
+     IdentityFile ~/.ssh/id_rsa
+
+Host node5
+     Hostname 10.150.1.212
+     User ubuntu
+     IdentityFile ~/.ssh/id_rsa
+
+Host node6
+     Hostname 10.150.1.151
+     User ubuntu
+     IdentityFile ~/.ssh/id_rsa
