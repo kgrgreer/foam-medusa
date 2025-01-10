@@ -1,0 +1,5 @@
+<title>CronMedusa</title>
+<p>Medusa splits cronjobdao into crondao and cronjobdao.</p>
+CronJobDAO now only has 'running' crons. Clustering is disabled, and the numerous updates are not persisted in medusa.
+CronDAO holds all crons, any edits, enabling/disabling occurs here.
+When a cron is enabled it is copied to cronjobdao.

@@ -12,5 +12,5 @@ TARBALL=${TMP_PATH}/${TARBALL_NAME}
 exec 4<$1
 while read -u4 m; do
     echo Installing $SYSTEM_NAME-$VERSION to $m
-    foam-medusa/bin/install_remote.sh -W$m -T${TARBALL} &
+    foam3/tools/bin/install_remote.sh -W$m -T${TARBALL} &
 done

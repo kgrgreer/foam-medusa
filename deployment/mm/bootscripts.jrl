@@ -1,0 +1,45 @@
+p({
+  "class":"foam.nanos.script.Script",
+  "id":"main",
+  "clusterable":false,
+  "code":"""
+  /* Set AppConfig version from jar manifest*/
+  import foam.nanos.app.Mode;
+  import foam.nanos.app.AppConfig;
+
+  logger = (foam.nanos.logger.Logger) x.get("logger");
+  version = foam.nanos.app.AppConfig.class.getPackage().getImplementationVersion();
+  appConfig = x.get("appConfig");
+  if ( ! foam.util.SafetyUtil.isEmpty(version) ) {
+    appConfig.setVersion(version);
+  } else if ( foam.util.SafetyUtil.isEmpty(appConfig.getVersion()) ) {
+    appConfig.setVersion("1.0.0");
+  }
+  mode = System.getProperty("appconfig.mode");
+  if ( ! foam.util.SafetyUtil.isEmpty(mode) ) {
+    mode = mode.substring(0,1).toUpperCase() + mode.substring(1).toLowerCase();
+    m = Mode.forLabel(mode);
+    appConfig.setMode(m);
+  }
+
+  logger.log(new Object[] {"AppConfig", "version", version});
+  print("AppConfig,version,"+version);
+
+  // See Boot.java serviceDAO setup.
+  // On startup, select() will be against repo services.0.
+  // Mediator/Node replay put()s will hit the serviceDAO_ above,
+  // which has a listener to Reload the service on change.
+  dao = x.get("nSpecDAO");
+  while ( dao != null &&
+          ! ( dao instanceof foam.nanos.auth.AuthorizationDAO ) ) {
+    dao = dao.getDelegate();
+  }
+  if ( dao == null ) {
+    logger.error(new Object[] {"bootscript,main,AuthorizationDAO not found to set serviceDAO");
+  }
+  dao.setDelegate(new foam.nanos.medusa.MedusaAdapterDAO.Builder(x)
+    .setNSpec(new foam.nanos.boot.NSpec.Builder(x).setName("nSpecDAO").build())
+    .setDelegate(dao.getDelegate())
+    .build());
+  """
+})

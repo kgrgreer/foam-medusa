@@ -1,0 +1,19 @@
+p({
+  "class":"foam.nanos.menu.Menu",
+  "id":"admin.crons",
+  "label":"Crons",
+  "handler":{
+    "class":"foam.nanos.menu.DAOMenu2",
+    "config":{
+      "class":"foam.comics.v2.DAOControllerConfig",
+      "daoKey":"cronDAO"
+    }
+  },
+  "parent":"admin"
+})
+
+p({
+  "class":"foam.nanos.menu.Menu",
+  "id":"admin.cronjobs",
+  "label":"Cronjobs - Active Crons"
+})

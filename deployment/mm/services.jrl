@@ -472,3 +472,34 @@ p({
       .build();
     `
 })
+
+p({
+  "class":"foam.nanos.boot.NSpec",
+  "name":"cronScheduler",
+  "lazy":false,
+  "serviceScript":"""
+    return new foam.nanos.medusa.MedusaCronScheduler();
+  """
+})
+
+
+p({
+  class:"foam.nanos.boot.NSpec",
+  name:"smtpAgent",
+  lazy: false,
+  service:{
+    class:"foam.nanos.medusa.MedusaSMTPAgent",
+    id: 'smtp'
+  }
+})
+
+p({
+  class:"foam.nanos.boot.NSpec",
+  name:"emailFolderAgent",
+  lazy: false,
+  service:{
+    class:"foam.nanos.medusa.MedusaEmailFolderAgent",
+    id: 'imap',
+    protocol: 'imaps'
+  }
+})
