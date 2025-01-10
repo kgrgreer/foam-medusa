@@ -34,9 +34,9 @@ p({
           ! ( dao instanceof foam.nanos.auth.AuthorizationDAO ) ) {
     dao = dao.getDelegate();
   }
-  if ( dao == null ) {
-    logger.error(new Object[] {"bootscript,main,AuthorizationDAO not found to set serviceDAO");
-  }
+  if ( dao == null )
+    logger.error(new Object[] {"bootscript,main,AuthorizationDAO not found to set serviceDAO"});
+
   dao.setDelegate(new foam.nanos.medusa.MedusaAdapterDAO.Builder(x)
     .setNSpec(new foam.nanos.boot.NSpec.Builder(x).setName("nSpecDAO").build())
     .setDelegate(dao.getDelegate())
