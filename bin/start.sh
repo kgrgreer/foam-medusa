@@ -1,9 +1,9 @@
 #!/bin/bash
 
-source build/env.sh
+source $(dirname "$0")/env.sh
 
 exec 4<$1
 while read -u4 m; do
     echo $m
-    ssh $m 'sudo systemctl start '${SYSTEM_NAME}
+    ssh $m 'sudo systemctl start '${APP_NAME}
 done

@@ -6,10 +6,10 @@ fi
 
 timestamp=$1
 
-source build/env.sh
+source $(dirname "$0")/env.sh
 
 exec 4<$2
 while read -u4 m; do
     echo $m
-    ssh -o ConnectTimeout=5 $m "sudo cp ledger-${timestamp} /opt/${SYSTEM_NAME}/journals/ledger" &
+    ssh -o ConnectTimeout=5 $m "sudo cp ledger-${timestamp} /opt/${APP_NAME}/journals/ledger" &
 done

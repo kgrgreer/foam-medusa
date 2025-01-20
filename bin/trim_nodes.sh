@@ -4,7 +4,7 @@ if [ "$#" -ne 2 ]; then
     exit 1
 fi
 
-source build/env.sh
+source $(dirname "$0")/env.sh
 
 entry=$1
 
@@ -14,7 +14,7 @@ nodeCount=0
 # iterate through nodes and count how many nodes have requested index
 while read -u4 m; do
     let nodeCount++
-    entryFound=$(ssh -n -o ConnectTimeout=5 $m "sudo grep index:${entry}, /opt/${SYSTEM_NAME}/journals/ledger" 2>&1)
+    entryFound=$(ssh -n -o ConnectTimeout=5 $m "sudo grep index:${entry}, /opt/${APP_NAME}/journals/ledger" 2>&1)
     if [ -z "$entryFound" ]; then
       echo "index not found"
     else
@@ -36,7 +36,7 @@ echo $finalIndex
 # on each node decrement given index to find out what is the smallest index out of all the nodes
 while read -u4 m; do
     tempIndex=$entry
-    while [ -z $(ssh -o ConnectTimeout=5 $m "sudo grep index:${tempIndex}, /opt/${SYSTEM_NAME}/journals/ledger" 2>&1) ]; do
+    while [ -z $(ssh -o ConnectTimeout=5 $m "sudo grep index:${tempIndex}, /opt/${APP_NAME}/journals/ledger" 2>&1) ]; do
         let tempIndex--
     done
     if [ "$finalIndex" -gt "$tempIndex" ]; then
