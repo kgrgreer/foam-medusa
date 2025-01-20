@@ -4,11 +4,11 @@ if [ "$#" -ne 2 ]; then
     exit 1
 fi
 
-source build/env.sh
+source $(dirname "$0")/env.sh
 
 n=$1
 exec 4<$2
 while read -u4 m; do
     echo $m
-    ssh -o ConnectTimeout=5 $m "sudo rm /opt/${SYSTEM_NAME}/journals/${n};"
+    ssh -o ConnectTimeout=5 $m "sudo rm /opt/${APP_NAME}/journals/${n};"
 done

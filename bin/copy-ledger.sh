@@ -4,7 +4,7 @@ if [ "$#" -ne 2 ]; then
     exit 1
 fi
 
-source build/env.sh
+source $(dirname "$0")/env.sh
 
 d=$(date +%Y%m%d%H%M%S)
 echo $d
@@ -14,5 +14,5 @@ exec 4<$2
 while read -u4 m; do
     echo $m
     mkdir -p $dir
-    scp $m:/opt/${SYSTEM_NAME}/journals/ledger ${dir}/${m}-ledger
+    scp $m:/opt/${APP_NAME}/journals/ledger ${dir}/${m}-ledger
 done
