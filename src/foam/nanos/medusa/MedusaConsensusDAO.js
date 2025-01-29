@@ -132,7 +132,7 @@ This is the heart of Medusa.`,
           getLogger().info("put", dagger.getGlobalIndex(x), replaying.getIndex(), replaying.getReplayIndex(), entry.toSummary(), entry.getCreated(), "from", entry.getNode());
         }
 
-        synchronized ( entry.getId().toString().intern() ) {
+        synchronized ( String.valueOf(entry.getId()).intern() ) {
 
           existing = (MedusaEntry) getDelegate().find_(x, entry.getId());
           if ( existing != null ) {
@@ -215,7 +215,7 @@ This is the heart of Medusa.`,
       ReplayingInfo replaying = (ReplayingInfo) x.get("replayingInfo");
       DaggerService dagger = (DaggerService) x.get("daggerService");
       PM pm = null;
-      synchronized ( entry.getId().toString().intern() ) {
+      synchronized ( String.valueOf(entry.getId()).intern() ) {
         ((OMLogger) x.get("OMLogger")).log("medusa.consensus.promote");
         entry = (MedusaEntry) getDelegate().find_(x, entry.getId());
         if ( entry.getPromoted() ) {

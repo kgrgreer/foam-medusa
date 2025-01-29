@@ -34,20 +34,6 @@ The data of a MedusaEntry is the json delta of the original put or remove DAO op
 
   properties: [
     {
-      class: 'String',
-      name: 'nSpecName',
-      label: 'NSpec Name',
-      visibility: 'RO',
-      tableWidth: 225
-    },
-    {
-      class: 'Enum',
-      of: 'foam.dao.DOP',
-      name: 'dop',
-      visibility: 'RO',
-      tableWidth: 100
-    },
-    {
       name: 'index',
       class: 'Long',
       visibility: 'RO',
@@ -82,6 +68,20 @@ The data of a MedusaEntry is the json delta of the original put or remove DAO op
       name: 'hash2',
       visibility: 'HIDDEN',
       storageTransient: true
+    },
+    {
+      class: 'String',
+      name: 'nSpecName',
+      label: 'NSpec Name',
+      visibility: 'RO',
+      tableWidth: 225
+    },
+    {
+      class: 'Enum',
+      of: 'foam.dao.DOP',
+      name: 'dop',
+      visibility: 'RO',
+      tableWidth: 100
     },
     {
       document: 'Stringified FObject of non storageTransient properties',
