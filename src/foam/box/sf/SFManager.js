@@ -9,21 +9,21 @@ foam.CLASS({
   name: 'SFManager',
   
   implements: [
-    'foam.nanos.NanoService',
+    'foam.core.COREService',
   ],
 
   javaImports: [
     'foam.box.Box',
     'foam.box.ReplyBox',
-    'foam.core.Agency',
-    'foam.core.ContextAgent',
-    'foam.core.Detachable',
-    'foam.core.FObject',
-    'foam.core.X',
+    'foam.lang.Agency',
+    'foam.lang.ContextAgent',
+    'foam.lang.Detachable',
+    'foam.lang.FObject',
+    'foam.lang.X',
     'foam.dao.AbstractSink',
     'foam.dao.DAO',
-    'foam.nanos.logger.Logger',
-    'foam.nanos.logger.PrefixLogger',
+    'foam.core.logger.Logger',
+    'foam.core.logger.PrefixLogger',
     'foam.util.concurrent.AbstractAssembly',
     'foam.util.concurrent.AssemblyLine',
     'foam.util.concurrent.AsyncAssemblyLine',
@@ -68,7 +68,7 @@ foam.CLASS({
     {
       name: 'logger',
       class: 'FObjectProperty',
-      of: 'foam.nanos.logger.Logger',
+      of: 'foam.core.logger.Logger',
       visibility: 'HIDDEN',
       transient: true,
       javaCloneProperty: '//noop',

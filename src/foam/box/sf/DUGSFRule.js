@@ -6,11 +6,11 @@
 foam.CLASS({
   package: 'foam.box.sf',
   name: 'DUGSFRule',
-  extends: 'foam.nanos.dig.DUGRule',
+  extends: 'foam.core.dig.DUGRule',
   
   javaImports: [
-    'foam.core.ContextAgent',
-    'foam.core.X',
+    'foam.lang.ContextAgent',
+    'foam.lang.X',
     'foam.dao.AbstractSink',
     'foam.dao.DAO',
     'foam.dao.HTTPSink',

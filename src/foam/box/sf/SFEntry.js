@@ -7,12 +7,12 @@
 foam.CLASS({
   package: 'foam.box.sf',
   name: 'SFEntry',
-  extends: 'foam.nanos.medusa.MedusaEntry',
+  extends: 'foam.core.medusa.MedusaEntry',
 
   properties: [
     {
       class: 'FObjectProperty',
-      of: 'foam.core.FObject',
+      of: 'foam.lang.FObject',
       name: 'object',
       storageTransient: false
     },

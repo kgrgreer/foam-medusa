@@ -7,7 +7,7 @@
 foam.CLASS({
 	package: 'foam.box.sf',
   name: 'SFException',
-  javaExtends: 'foam.core.FOAMException',
+  javaExtends: 'foam.lang.FOAMException',
 
   javaCode: `
     public SFException(String message) {

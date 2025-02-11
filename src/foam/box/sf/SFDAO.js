@@ -11,7 +11,7 @@ foam.CLASS({
   implements: [ 'foam.dao.DAO' ],
   
   javaImports: [
-    'foam.core.FObject',
+    'foam.lang.FObject',
     'foam.dao.DAO'
   ],
   

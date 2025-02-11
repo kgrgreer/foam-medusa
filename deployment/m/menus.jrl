@@ -1,19 +1,19 @@
 p({
-  "class":"foam.nanos.menu.Menu",
+  "class":"foam.core.menu.Menu",
   "id":"medusa",
   "label":"Medusa / Clustering",
-  "handler":{"class":"foam.nanos.menu.SubMenu"},
+  "handler":{"class":"foam.core.menu.SubMenu"},
   "parent":"",
   "icon":"images/parent-menu-icon.png",
   "parent":"admin"
 })
 
 p({
-  "class":"foam.nanos.menu.Menu",
+  "class":"foam.core.menu.Menu",
   "id":"medusa.clusterConfig",
   "label":"Cluster Config",
   "handler":{
-    "class":"foam.nanos.menu.DAOMenu2",
+    "class":"foam.core.menu.DAOMenu2",
     "config":{
       "class":"foam.comics.v2.DAOControllerConfig",
       "daoKey":"clusterConfigDAO",
@@ -29,11 +29,11 @@ p({
 })
 
 p({
-  "class":"foam.nanos.menu.Menu",
+  "class":"foam.core.menu.Menu",
   "id":"medusa.medusaEntry",
   "label":"Medusa Entry",
   "handler":{
-    "class":"foam.nanos.menu.DAOMenu2",
+    "class":"foam.core.menu.DAOMenu2",
     "config":{
       "class":"foam.comics.v2.DAOControllerConfig",
       "daoKey":"medusaEntryDAO",
@@ -49,11 +49,11 @@ p({
 })
 
 p({
-  "class":"foam.nanos.menu.Menu",
+  "class":"foam.core.menu.Menu",
   "id":"admin.hosts",
   "label":"Hosts",
   "handler":{
-    "class":"foam.nanos.menu.DAOMenu2",
+    "class":"foam.core.menu.DAOMenu2",
     "config":{
       "class":"foam.comics.v2.DAOControllerConfig",
       "daoKey":"hostsDAO",
@@ -69,24 +69,24 @@ p({
 })
 
 p({
-  "class": "foam.nanos.menu.Menu",
+  "class": "foam.core.menu.Menu",
   "id": "medusa.clusterTopology",
   "label": "Cluster Topology",
   "handler": {
-    "class": "foam.nanos.menu.ViewMenu",
+    "class": "foam.core.menu.ViewMenu",
     "view": {
-      "class": "foam.nanos.medusa.ClusterTopologyView"
+      "class": "foam.core.medusa.ClusterTopologyView"
     }
   },
   "parent":"medusa"
 })
 
 p({
-  "class":"foam.nanos.menu.Menu",
+  "class":"foam.core.menu.Menu",
   "id":"medusa.clusterTopologyDAO",
   "label":"Cluster Topology DAO",
   "handler":{
-    "class":"foam.nanos.menu.DAOMenu2",
+    "class":"foam.core.menu.DAOMenu2",
     "config":{
       "class":"foam.comics.v2.DAOControllerConfig",
       "daoKey":"clusterTopologyDAO",
@@ -101,11 +101,11 @@ p({
   "parent":"medusa"
 })
 p({
-  class: "foam.nanos.menu.Menu",
-  id: "foam.nanos.medusa.medusaHealthWidget",
+  class: "foam.core.menu.Menu",
+  id: "foam.core.medusa.medusaHealthWidget",
   label: "Medusa Health",
   handler: {
-    class: "foam.nanos.menu.ViewMenu",
+    class: "foam.core.menu.ViewMenu",
     view: {
       class: "foam.dashboard.view.CardWrapper",
       title: "Medusa Health",
@@ -114,9 +114,9 @@ p({
         dao: "healthDAO",
         predicate: {
           class: "foam.mlang.predicate.FScriptPredicate",
-          query: 'instanceof foam.nanos.medusa.MedusaHealth && medusaType == foam.nanos.medusa.MedusaType.MEDIATOR'
+          query: 'instanceof foam.core.medusa.MedusaHealth && medusaType == foam.core.medusa.MedusaType.MEDIATOR'
         },
-        citationView: "foam.nanos.medusa.MedusaHealthCitationView",
+        citationView: "foam.core.medusa.MedusaHealthCitationView",
         viewMore: true,
         emptyTitle: "No activity"
       },
@@ -126,16 +126,16 @@ p({
   parent:"hidden"
 })
 p({
-  class: "foam.nanos.menu.Menu",
-  id: "foam.nanos.medusa.medusaIndexChartWidget",
+  class: "foam.core.menu.Menu",
+  id: "foam.core.medusa.medusaIndexChartWidget",
   label: "Medusa Index",
   handler: {
-    class: "foam.nanos.menu.ViewMenu",
+    class: "foam.core.menu.ViewMenu",
     view: {
       class: "foam.dashboard.view.CardWrapper",
       title: "Medusa Index",
       currentView: {
-        class: "foam.nanos.analytics.CandlestickChartCitationView",
+        class: "foam.core.analytics.CandlestickChartCitationView",
         candlestickDAOKey: 'com5MinuteDAO',
         candlestickKey1: 'medusa.index.aphrodite',
         candlestickKey2: 'medusa.index.argus',

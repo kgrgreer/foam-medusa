@@ -1,20 +1,20 @@
 p({
-  class: "foam.nanos.medusa.benchmark.DaggerLinkBenchmark",
+  class: "foam.core.medusa.benchmark.DaggerLinkBenchmark",
   id: "DaggerLinkBenchmark"
 })
 p({
-  class: "foam.nanos.medusa.benchmark.DaggerVerifyBenchmark",
+  class: "foam.core.medusa.benchmark.DaggerVerifyBenchmark",
   id: "DaggerVerifyBenchmark"
 })
 p({
-  class: "foam.nanos.medusa.benchmark.MedusaTestBenchmark",
+  class: "foam.core.medusa.benchmark.MedusaTestBenchmark",
   id: "MedusaTestBenchmark"
 })
 p({
-  class: "foam.nanos.medusa.benchmark.MedusaCUTestBenchmark",
+  class: "foam.core.medusa.benchmark.MedusaCUTestBenchmark",
   id: "MedusaCUTestBenchmark"
 })
 p({
-  class: "foam.nanos.medusa.benchmark.MedusaPingBenchmark",
+  class: "foam.core.medusa.benchmark.MedusaPingBenchmark",
   id: "MedusaPingBenchmark"
 })

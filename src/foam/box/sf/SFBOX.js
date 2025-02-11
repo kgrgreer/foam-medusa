@@ -11,7 +11,7 @@ foam.CLASS({
   implements: [ 'foam.box.Box' ],
 
   javaImports: [
-    'foam.core.FObject',
+    'foam.lang.FObject',
     'foam.box.Box',
     'foam.box.Message'
   ],

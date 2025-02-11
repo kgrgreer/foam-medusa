@@ -6,16 +6,16 @@
 foam.CLASS({
   package: 'foam.box.sf',
   name: 'DUGSFRuleAction',
-  extends: 'foam.nanos.dig.DUGRuleAction',
+  extends: 'foam.core.dig.DUGRuleAction',
   
   javaImports: [
-    'foam.core.ContextAgent',
-    'foam.core.X',
+    'foam.lang.ContextAgent',
+    'foam.lang.X',
     'foam.dao.AbstractSink',
     'foam.dao.DAO',
     'foam.dao.HTTPSink',
     'foam.dao.Sink',
-    'foam.nanos.logger.Loggers'
+    'foam.core.logger.Loggers'
   ],
   
   properties: [
@@ -28,7 +28,7 @@ foam.CLASS({
   methods: [
     {
       name: 'getDelegateSink',
-      args: 'X agencyX, foam.nanos.ruler.Rule rule',
+      args: 'X agencyX, foam.core.ruler.Rule rule',
       type: 'foam.dao.Sink',
       javaCode: `
         SFManager sfManager = (SFManager) agencyX.get("sfManager");

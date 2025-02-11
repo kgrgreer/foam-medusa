@@ -10,7 +10,7 @@ foam.CLASS({
   extends: 'foam.box.sf.SF',
 
   javaImports: [
-    'foam.core.X'
+    'foam.lang.X'
   ],
 
   tableColumns: [
