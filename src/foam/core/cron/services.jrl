@@ -1,0 +1,52 @@
+p({
+  "class":"foam.core.boot.CSpec",
+  "name":"cronDAO",
+  "serve":true,
+  "serviceScript":"""
+    return new foam.dao.EasyDAO.Builder(x)
+      .setOf(foam.core.cron.Cron.getOwnClassInfo())
+      .setGuid(true)
+      .setJournalType(foam.dao.JournalType.SINGLE_JOURNAL)
+      .setJournalName("cronjobs")
+      .setDecorator(new foam.core.cron.CronDAO.Builder(x)
+        .setDelegate(new foam.dao.NullDAO(x, foam.core.cron.Cron.getOwnClassInfo())).build())
+      .build()
+      .addPropertyIndex(new foam.lang.PropertyInfo[] { foam.core.cron.Cron.SCHEDULED_TIME })
+      .addPropertyIndex(new foam.lang.PropertyInfo[] { foam.core.cron.Cron.STATUS })
+      .addPropertyIndex(new foam.lang.PropertyInfo[] { foam.core.cron.Cron.LAST_RUN })
+      .addPropertyIndex(new foam.lang.PropertyInfo[] { foam.core.cron.Cron.ENABLED });
+  """,
+  "client":"""
+    {
+      "of":"foam.core.cron.Cron",
+      "cache": false
+    }
+  """
+})
+
+p({
+  "class":"foam.core.boot.CSpec",
+  "name":"localCronJobDAO",
+  "serviceScript":"""
+    return new foam.dao.EasyDAO.Builder(x)
+      .setOf(foam.core.cron.Cron.getOwnClassInfo())
+      .setDecorator(
+        new foam.core.cron.CronJobDAO.Builder(x)
+          .setDelegate(new foam.core.script.ScriptRunnerDAO(
+            new foam.core.cron.CronScheduleDAO.Builder(x)
+              .setDelegate(new foam.dao.NullDAO(x, foam.core.cron.Cron.getOwnClassInfo()))
+              .build()))
+          .build())
+      .setPm(true)
+      .setOrder(new foam.mlang.order.Comparator[] {
+        new foam.mlang.order.Desc.Builder(x).setArg1(foam.core.cron.Cron.ENABLED).build(),
+        new foam.mlang.order.Desc.Builder(x).setArg1(foam.core.cron.Cron.LAST_RUN).build()
+      })
+      .setCluster(false)
+      .build()
+      .addPropertyIndex(new foam.lang.PropertyInfo[] { foam.core.cron.Cron.SCHEDULED_TIME })
+      .addPropertyIndex(new foam.lang.PropertyInfo[] { foam.core.cron.Cron.STATUS })
+      .addPropertyIndex(new foam.lang.PropertyInfo[] { foam.core.cron.Cron.LAST_RUN })
+      .addPropertyIndex(new foam.lang.PropertyInfo[] { foam.core.cron.Cron.ENABLED });
+  """
+})

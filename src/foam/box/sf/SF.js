@@ -10,17 +10,17 @@ foam.CLASS({
   abstract: true,
 
   javaImports: [
-    'foam.core.X',
-    'foam.core.ClassInfo',
+    'foam.lang.X',
+    'foam.lang.ClassInfo',
     'foam.box.Box',
     'foam.box.Message',
     'foam.dao.*',
-    'foam.core.FObject',
+    'foam.lang.FObject',
     'foam.mlang.sink.Max',
-    'foam.nanos.logger.Logger',
-    'foam.nanos.logger.PrefixLogger',
-    'foam.nanos.fs.Storage',
-    'foam.nanos.fs.FileSystemStorage',
+    'foam.core.logger.Logger',
+    'foam.core.logger.PrefixLogger',
+    'foam.core.fs.Storage',
+    'foam.core.fs.FileSystemStorage',
     'foam.dao.ReadOnlyF3FileJournal',
     'foam.util.retry.RetryStrategy',
     'foam.util.retry.RetryForeverStrategy',
@@ -31,7 +31,7 @@ foam.CLASS({
     'foam.lib.NetworkPropertyPredicate',
     'foam.lib.StoragePropertyPredicate',
     'foam.log.LogLevel',
-    'foam.nanos.logger.Loggers',
+    'foam.core.logger.Loggers',
     'java.nio.file.*',
     'java.nio.file.attribute.*',
     'java.io.IOException',
@@ -147,7 +147,7 @@ foam.CLASS({
                                   .setFilename(getFilePrefix() + fileName)
                                   .setCreateFile(false)
                                   .setDao(new foam.dao.NullDAO())
-                                  .setLogger(new foam.nanos.logger.PrefixLogger(new Object[] { "[SF]", fileName }, foam.nanos.logger.StdoutLogger.instance()))
+                                  .setLogger(new foam.core.logger.PrefixLogger(new Object[] { "[SF]", fileName }, foam.core.logger.StdoutLogger.instance()))
                                   .build();
         if ( journal.getFileExist() == false ) {
           journal.createJournalFile();
@@ -292,7 +292,7 @@ foam.CLASS({
                     this.getFileName()
                   }, (Logger) x.get("logger"));
         createDelegate();
-        FileSystemStorage fileSystemStorage = getX().get(foam.nanos.fs.FileSystemStorage.class);
+        FileSystemStorage fileSystemStorage = getX().get(foam.core.fs.FileSystemStorage.class);
         java.io.File folder = fileSystemStorage.get(getFilePrefix());
         if ( ! folder.exists() ) folder.mkdir();
         List<String> filenames = new ArrayList<>(fileSystemStorage.getAvailableFiles(getFilePrefix(), getFileName()+".*"));
@@ -490,7 +490,7 @@ foam.CLASS({
             protected volatile int maxFileIndex_ = 0;
 
             static private class TempDAO extends ProxyDAO {
-              public foam.core.ClassInfo getOf() {
+              public foam.lang.ClassInfo getOf() {
                 return SFEntry.getOwnClassInfo();
               }
               protected List<SFEntry> list;

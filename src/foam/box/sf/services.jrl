@@ -1,5 +1,5 @@
 p({
-  "class": "foam.nanos.boot.NSpec",
+  "class": "foam.core.boot.CSpec",
   "name": "sfManager",
   "lazy": false,
   "service": {
@@ -8,7 +8,7 @@ p({
 })
 
 p({
-  "class":"foam.nanos.boot.NSpec",
+  "class":"foam.core.boot.CSpec",
   "name":"internalSFDAO",
   "description": "A read-only database of SF.",
   "serve":true,
@@ -33,7 +33,7 @@ p({
 })
 
 p({
-  "class":"foam.nanos.boot.NSpec",
+  "class":"foam.core.boot.CSpec",
   "name":"sfMonitorDAO",
   "serve":true,
   "serviceScript":
@@ -58,7 +58,7 @@ p({
 })
 
 p({
-  "class": "foam.nanos.boot.NSpec",
+  "class": "foam.core.boot.CSpec",
   "name": "sfBroadcastReceiverDAO",
   "serve": true,
   "serviceScript": `
@@ -73,7 +73,7 @@ p({
 })
 
 p({
-  "class":"foam.nanos.boot.NSpec",
+  "class":"foam.core.boot.CSpec",
   "name":"demoHttpSinkUsingAtime",
   "description": "A demo http sink for SFSink",
   "serviceScript":
@@ -81,7 +81,7 @@ p({
     return new foam.dao.HTTPSink(
       "http://localhost:7777/",
       null,
-      foam.nanos.http.Format.JSON,
+      foam.core.http.Format.JSON,
       new foam.lib.AndPropertyPredicate(
         x,
         new foam.lib.PropertyPredicate[] {

@@ -8,8 +8,8 @@ foam.POM({
   name: "src",
   projects: [
     { name: "foam/box/sf/pom" },
-    { name: "foam/nanos/cron/pom" },
-    { name: "foam/nanos/medusa/pom" },
-    { name: "foam/nanos/ticket/pom" }
+    { name: "foam/core/cron/pom" },
+    { name: "foam/core/medusa/pom" },
+    { name: "foam/core/ticket/pom" }
   ]
 });

@@ -1,5 +1,5 @@
 p({
-  class:"foam.nanos.script.Script",
+  class:"foam.core.script.Script",
   id:"MedusaNodePurge",
   description:"Issue DAO.PURGE_CMD against Medusa Node cache.",
   code:"""

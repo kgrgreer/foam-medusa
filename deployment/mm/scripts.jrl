@@ -1,10 +1,10 @@
 p({
-  class:"foam.nanos.script.Script",
+  class:"foam.core.script.Script",
   id:"MedusaNodePurge",
   description:"Issue DAO.PURGE_CMD against Medusa Node cache.",
   code:"""
 import foam.dao.DAO;
-import foam.nanos.medusa.*;
+import foam.core.medusa.*;
 logger = x.get("logger");
 support = x.get("clusterConfigSupport");
 myConfig = support.getConfig(x, support.getConfigId());

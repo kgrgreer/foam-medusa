@@ -1,123 +1,123 @@
 p({
-  "class":"foam.nanos.boot.NSpec",
+  "class":"foam.core.boot.CSpec",
   "name":"medusaConsensusMonitor",
   "lazy":false,
   "service": {
-    "class":"foam.nanos.medusa.MedusaConsensusMonitor"
+    "class":"foam.core.medusa.MedusaConsensusMonitor"
   }
 })
 
 p({
-  "class":"foam.nanos.boot.NSpec",
+  "class":"foam.core.boot.CSpec",
   "name":"electoralService",
   "serve":true,
-  "boxClass":"foam.nanos.medusa.ElectoralServiceSkeleton",
+  "boxClass":"foam.core.medusa.ElectoralServiceSkeleton",
   "authenticate": true,
   "serviceScript":"""
-    return new foam.nanos.medusa.ElectoralServiceServer.Builder(x)
+    return new foam.core.medusa.ElectoralServiceServer.Builder(x)
       .build();
   """,
-  "client":"{ \"class\":\"foam.nanos.medusa.ClientElectoralService\" }"
+  "client":"{ \"class\":\"foam.core.medusa.ClientElectoralService\" }"
 })
 
 p({
-  "class": "foam.nanos.boot.NSpec",
+  "class": "foam.core.boot.CSpec",
   "name": "medusaRegistry",
   "lazy":false,
-  "service": {"class":"foam.nanos.medusa.MedusaRegistryService"}
+  "service": {"class":"foam.core.medusa.MedusaRegistryService"}
 })
 
 // p({
-//   "class":"foam.nanos.boot.NSpec",
+//   "class":"foam.core.boot.CSpec",
 //   "name":"promotedPurgeAgent",
 //   "lazy": false,
-//   "serviceClass":"foam.nanos.medusa.PromotedPurgeAgent"
+//   "serviceClass":"foam.core.medusa.PromotedPurgeAgent"
 // })
 p({
-  "class":"foam.nanos.boot.NSpec",
+  "class":"foam.core.boot.CSpec",
   "name":"promotedClearAgent",
   "lazy": false,
-  "serviceClass":"foam.nanos.medusa.PromotedClearAgent"
+  "serviceClass":"foam.core.medusa.PromotedClearAgent"
 })
 
 // NOTE: see MedusaInternalDAO for access to this DAO.
 p({
-  "class": "foam.nanos.boot.NSpec",
+  "class": "foam.core.boot.CSpec",
   "name": "internalMedusaDAO",
   "lazy": false,
   "authenticate": false,
   "serviceScript": `
     return new foam.dao.EasyDAO.Builder(x)
-      .setOf(foam.nanos.medusa.MedusaEntry.getOwnClassInfo())
+      .setOf(foam.core.medusa.MedusaEntry.getOwnClassInfo())
       .setGuid(true)
       .setAuthorize(false)
       .setCluster(false)
       .setRuler(false)
       .setPm(true)
       .build()
-      .addPropertyIndex(new foam.core.PropertyInfo[] {
-        foam.nanos.medusa.MedusaEntry.INDEX
+      .addPropertyIndex(new foam.lang.PropertyInfo[] {
+        foam.core.medusa.MedusaEntry.INDEX
       })
-      .addPropertyIndex(new foam.core.PropertyInfo[] {
-        foam.nanos.medusa.MedusaEntry.HASH
+      .addPropertyIndex(new foam.lang.PropertyInfo[] {
+        foam.core.medusa.MedusaEntry.HASH
       })
-      .addPropertyIndex(new foam.core.PropertyInfo[] {
-        foam.nanos.medusa.MedusaEntry.CONSENSUS_COUNT
+      .addPropertyIndex(new foam.lang.PropertyInfo[] {
+        foam.core.medusa.MedusaEntry.CONSENSUS_COUNT
       })
-      .addPropertyIndex(new foam.core.PropertyInfo[] {
-        foam.nanos.medusa.MedusaEntry.PROMOTED
+      .addPropertyIndex(new foam.lang.PropertyInfo[] {
+        foam.core.medusa.MedusaEntry.PROMOTED
       })
-      .addPropertyIndex(new foam.core.PropertyInfo[] {
-        foam.nanos.medusa.MedusaEntry.INDEX,
-        foam.nanos.medusa.MedusaEntry.CONSENSUS_COUNT
+      .addPropertyIndex(new foam.lang.PropertyInfo[] {
+        foam.core.medusa.MedusaEntry.INDEX,
+        foam.core.medusa.MedusaEntry.CONSENSUS_COUNT
       })
-      .addPropertyIndex(new foam.core.PropertyInfo[] {
-        foam.nanos.medusa.MedusaEntry.INDEX,
-        foam.nanos.medusa.MedusaEntry.PROMOTED
+      .addPropertyIndex(new foam.lang.PropertyInfo[] {
+        foam.core.medusa.MedusaEntry.INDEX,
+        foam.core.medusa.MedusaEntry.PROMOTED
       });
    `
 })
 
 p({
-  "class": "foam.nanos.boot.NSpec",
+  "class": "foam.core.boot.CSpec",
   "name": "medusaEntryDAO",
   "serve": true,
   "serviceScript": `
     return new foam.dao.EasyDAO.Builder(x)
-      .setOf(foam.nanos.medusa.MedusaEntry.getOwnClassInfo())
+      .setOf(foam.core.medusa.MedusaEntry.getOwnClassInfo())
       .setInnerDAO(x.get("internalMedusaDAO"))
       .setCluster(false)
       .setRuler(false)
       .setPm(true)
       .setEnableInterfaceDecorators(false)
-      .setDecorator(new foam.nanos.medusa.ReplayMediatorDAO.Builder(x)
-        .setDelegate(new foam.nanos.medusa.MedusaEntryNoRemoveDAO.Builder(x)
-          .setDelegate(new foam.dao.NullDAO(x, foam.nanos.medusa.MedusaEntry.getOwnClassInfo()))
+      .setDecorator(new foam.core.medusa.ReplayMediatorDAO.Builder(x)
+        .setDelegate(new foam.core.medusa.MedusaEntryNoRemoveDAO.Builder(x)
+          .setDelegate(new foam.dao.NullDAO(x, foam.core.medusa.MedusaEntry.getOwnClassInfo()))
           .build())
         .build())
-      .setOrder(new foam.mlang.order.Comparator[] { foam.mlang.MLang.DESC(foam.nanos.medusa.MedusaEntry.ID) })
+      .setOrder(new foam.mlang.order.Comparator[] { foam.mlang.MLang.DESC(foam.core.medusa.MedusaEntry.ID) })
       .build();
   `,
-  "client": "{\"of\":\"foam.nanos.medusa.MedusaEntry\"}"
+  "client": "{\"of\":\"foam.core.medusa.MedusaEntry\"}"
 })
 
 p({
-  "class": "foam.nanos.boot.NSpec",
+  "class": "foam.core.boot.CSpec",
   "name": "medusaEntryMediatorDAO",
   "serve": true,
   "serviceScript": `
     return new foam.dao.EasyDAO.Builder(x)
-      .setOf(foam.nanos.medusa.MedusaEntry.getOwnClassInfo())
+      .setOf(foam.core.medusa.MedusaEntry.getOwnClassInfo())
       .setNullify(true)
       .setCluster(false)
       .setRuler(false)
       .setPm(true)
-      .setDelegate(new foam.nanos.medusa.ReplayingDAO.Builder(x)
-      .setDelegate(new foam.nanos.medusa.CompactionDAO.Builder(x)
-      .setDelegate(new foam.nanos.medusa.SecondaryMediatorDAO.Builder(x)
-      .setDelegate(new foam.nanos.medusa.PrimaryMediatorDAO.Builder(x)
-      .setDelegate(new foam.nanos.medusa.MedusaBroadcast2NodesDAO.Builder(x)
-        .setDelegate(new foam.dao.NullDAO(x, foam.nanos.medusa.MedusaEntry.getOwnClassInfo()))
+      .setDelegate(new foam.core.medusa.ReplayingDAO.Builder(x)
+      .setDelegate(new foam.core.medusa.CompactionDAO.Builder(x)
+      .setDelegate(new foam.core.medusa.SecondaryMediatorDAO.Builder(x)
+      .setDelegate(new foam.core.medusa.PrimaryMediatorDAO.Builder(x)
+      .setDelegate(new foam.core.medusa.MedusaBroadcast2NodesDAO.Builder(x)
+        .setDelegate(new foam.dao.NullDAO(x, foam.core.medusa.MedusaEntry.getOwnClassInfo()))
       .build())
       .build())
       .build())
@@ -128,24 +128,24 @@ p({
 })
 
 p({
-  "class": "foam.nanos.boot.NSpec",
+  "class": "foam.core.boot.CSpec",
   "name": "medusaMediatorDAO",
   "serve": true,
   "lazy": false,
   "serviceScript": `
     return new foam.dao.EasyDAO.Builder(x)
-      .setOf(foam.nanos.medusa.MedusaEntry.getOwnClassInfo())
+      .setOf(foam.core.medusa.MedusaEntry.getOwnClassInfo())
       .setNullify(true)
       .setCluster(false)
       .setRuler(false)
       .setPm(true)
       .setEnableInterfaceDecorators(false)
-      .setDecorator(new foam.nanos.medusa.MedusaConsensusDAO.Builder(x)
-      .setDelegate(new foam.nanos.medusa.MedusaSetNodeDAO.Builder(x)
-      .setDelegate(new foam.nanos.medusa.MedusaBroadcastDAO.Builder(x)
-      .setDelegate(new foam.nanos.medusa.MedusaBroadcastNARegionNodesDAO.Builder(x)
-      .setDelegate(new foam.nanos.medusa.MedusaInternalDAO.Builder(x)
-      .setDelegate(new foam.dao.NullDAO(x, foam.nanos.medusa.MedusaEntry.getOwnClassInfo()))
+      .setDecorator(new foam.core.medusa.MedusaConsensusDAO.Builder(x)
+      .setDelegate(new foam.core.medusa.MedusaSetNodeDAO.Builder(x)
+      .setDelegate(new foam.core.medusa.MedusaBroadcastDAO.Builder(x)
+      .setDelegate(new foam.core.medusa.MedusaBroadcastNARegionNodesDAO.Builder(x)
+      .setDelegate(new foam.core.medusa.MedusaInternalDAO.Builder(x)
+      .setDelegate(new foam.dao.NullDAO(x, foam.core.medusa.MedusaEntry.getOwnClassInfo()))
       .build())
       .build())
       .build())
@@ -153,72 +153,72 @@ p({
       .build())
       .build()
    `,
-  "client": "{\"of\":\"foam.nanos.medusa.MedusaEntry\"}"
+  "client": "{\"of\":\"foam.core.medusa.MedusaEntry\"}"
 })
 
 p({
-  "class": "foam.nanos.boot.NSpec",
+  "class": "foam.core.boot.CSpec",
   "name": "compactionDAO",
   "serve": true,
   "serviceScript": """
     return new foam.dao.EasyDAO.Builder(x)
-      .setOf(foam.nanos.medusa.Compaction.getOwnClassInfo())
+      .setOf(foam.core.medusa.Compaction.getOwnClassInfo())
       .setJournalType(foam.dao.JournalType.SINGLE_JOURNAL)
       .setJournalName("compactions")
       .setRuler(false)
       .build()
-      .orderBy(foam.mlang.MLang.DESC(foam.nanos.medusa.Compaction.ID));
+      .orderBy(foam.mlang.MLang.DESC(foam.core.medusa.Compaction.ID));
   """,
-  "client": "{\"of\":\"foam.nanos.medusa.Compaction\"}"
+  "client": "{\"of\":\"foam.core.medusa.Compaction\"}"
 })
 
 p({
-  "class":"foam.nanos.boot.NSpec",
+  "class":"foam.core.boot.CSpec",
   "name":"healthDAO",
   "serve":true,
   "serviceScript":
   """
   return new foam.dao.EasyDAO.Builder(x)
-    .setOf(foam.nanos.medusa.MedusaHealth.getOwnClassInfo())
-    .setDecorator(new foam.nanos.medusa.MedusaHealthStatusDAO.Builder(x)
-      .setDelegate(new foam.dao.NullDAO(x, foam.nanos.medusa.MedusaHealth.getOwnClassInfo())).build())
+    .setOf(foam.core.medusa.MedusaHealth.getOwnClassInfo())
+    .setDecorator(new foam.core.medusa.MedusaHealthStatusDAO.Builder(x)
+      .setDelegate(new foam.dao.NullDAO(x, foam.core.medusa.MedusaHealth.getOwnClassInfo())).build())
     .setCluster(false)
     .build()
   """,
   "client":
   """
   {
-    "of":"foam.nanos.medusa.MedusaHealth"
+    "of":"foam.core.medusa.MedusaHealth"
   }
   """
 })
 p({
-  "class":"foam.nanos.boot.NSpec",
+  "class":"foam.core.boot.CSpec",
   "name":"medusaHealthDAO",
   "serve":true,
   "documentation":"Intended for Analytics charting",
   "serviceScript":
   """
   return new foam.dao.EasyDAO.Builder(x)
-    .setOf(foam.nanos.medusa.MedusaHealth.getOwnClassInfo())
+    .setOf(foam.core.medusa.MedusaHealth.getOwnClassInfo())
     .setInnerDAO(x.get("healthDAO"))
     .build();
   """,
   "client":
   """
   {
-    "of":"foam.nanos.medusa.MedusaHealth"
+    "of":"foam.core.medusa.MedusaHealth"
   }
   """
 })
 
 p({
-  "class":"foam.nanos.boot.NSpec",
+  "class":"foam.core.boot.CSpec",
   "name":"ruleHistoryDAO",
   "serve":true,
   "serviceScript":"""
     return new foam.dao.EasyDAO.Builder(x)
-      .setOf(foam.nanos.ruler.RuleHistory.getOwnClassInfo())
+      .setOf(foam.core.ruler.RuleHistory.getOwnClassInfo())
       .setFuid(true)
       .setJournalType(foam.dao.JournalType.NO_JOURNAL)
       .setJournalName("ruleHistory")
@@ -226,26 +226,26 @@ p({
       .setRuler(false)
       .setPm(true)
       .setFixedSize(new foam.dao.FixedSizeDAO.Builder(x)
-        .setComparator(foam.mlang.MLang.DESC(foam.nanos.ruler.RuleHistory.CREATED))
+        .setComparator(foam.mlang.MLang.DESC(foam.core.ruler.RuleHistory.CREATED))
         .setSize(100000)
         .build())
       .build();
     """,
-    "client":"{\"of\":\"foam.nanos.ruler.RuleHistory\"}"
+    "client":"{\"of\":\"foam.core.ruler.RuleHistory\"}"
 })
 
 p({
-  "class": "foam.nanos.boot.NSpec",
+  "class": "foam.core.boot.CSpec",
   "name": "sfManager",
   "lazy": false,
   "service": {
-    "class": "foam.nanos.medusa.sf.MedusaSFManager",
+    "class": "foam.core.medusa.sf.MedusaSFManager",
     "replayStrategy": 30
   }
 })
 
 p({
-  "class": "foam.nanos.boot.NSpec",
+  "class": "foam.core.boot.CSpec",
   "name": "sfBroadcastReceiverDAO",
   "serve": true,
   "serviceScript": `
@@ -255,7 +255,7 @@ p({
       .setCluster(false)
       .setRuler(false)
       .setPm(true)
-      .setDelegate(new foam.nanos.medusa.sf.SFBroadcastReceiverDAO.Builder(x)
+      .setDelegate(new foam.core.medusa.sf.SFBroadcastReceiverDAO.Builder(x)
         .setDelegate(new foam.dao.NullDAO(x, foam.box.sf.SFEntry.getOwnClassInfo()))
       .build())
       .build();
@@ -264,102 +264,102 @@ p({
 
 // Clustered OMs
 p({
-  "class": "foam.nanos.boot.NSpec",
+  "class": "foam.core.boot.CSpec",
   "name": "CCOMLogger",
   "description":"Clustered Candlestick OM Logger",
   "service": {
-    class:"foam.nanos.om.OMLogger",
+    class:"foam.core.om.OMLogger",
     foldManagerContextKey: "ccomFoldManager"
   }
 })
 
 p({
-  "class": "foam.nanos.boot.NSpec",
+  "class": "foam.core.boot.CSpec",
   "name": "localCcom1MinuteDAO",
   "serviceScript": """
     return new foam.dao.EasyDAO.Builder(x)
-      .setOf(foam.nanos.analytics.Candlestick.getOwnClassInfo())
+      .setOf(foam.core.analytics.Candlestick.getOwnClassInfo())
       .setAuthorize(false)
       .setSAF(true)
       .build();
   """
 })
 p({
-  "class": "foam.nanos.boot.NSpec",
+  "class": "foam.core.boot.CSpec",
   "name": "com1MinuteDAO",
   "serve": true,
   "serviceScript": """
     return new foam.dao.EasyDAO.Builder(x)
-      .setOf(foam.nanos.analytics.Candlestick.getOwnClassInfo())
+      .setOf(foam.core.analytics.Candlestick.getOwnClassInfo())
       .setInnerDAO(x.get("localCcom1MinuteDAO"))
-      .setOrder(new foam.mlang.order.Comparator[] { foam.mlang.MLang.DESC(foam.nanos.analytics.Candlestick.COUNT) })
+      .setOrder(new foam.mlang.order.Comparator[] { foam.mlang.MLang.DESC(foam.core.analytics.Candlestick.COUNT) })
       .build();
   """,
   "client": """
     {
-      "of":"foam.nanos.analytics.Candlestick"
+      "of":"foam.core.analytics.Candlestick"
     }
   """
 })
 
 p({
-  "class": "foam.nanos.boot.NSpec",
+  "class": "foam.core.boot.CSpec",
   "name": "localCcom5MinuteDAO",
   "serviceScript": """
     return new foam.dao.EasyDAO.Builder(x)
-      .setOf(foam.nanos.analytics.Candlestick.getOwnClassInfo())
+      .setOf(foam.core.analytics.Candlestick.getOwnClassInfo())
       .setAuthorize(false)
       .setSAF(true)
-      .setDecorator(new foam.nanos.alarming.CandlestickAlarmDAO.Builder(x)
-        .setDelegate(new foam.dao.NullDAO(x, foam.nanos.analytics.Candlestick.getOwnClassInfo())).build())
+      .setDecorator(new foam.core.alarming.CandlestickAlarmDAO.Builder(x)
+        .setDelegate(new foam.dao.NullDAO(x, foam.core.analytics.Candlestick.getOwnClassInfo())).build())
       .build();
   """
 })
 p({
-  "class": "foam.nanos.boot.NSpec",
+  "class": "foam.core.boot.CSpec",
   "name": "com5MinuteDAO",
   "serve": true,
   "serviceScript": """
     return new foam.dao.EasyDAO.Builder(x)
-      .setOf(foam.nanos.analytics.Candlestick.getOwnClassInfo())
+      .setOf(foam.core.analytics.Candlestick.getOwnClassInfo())
       .setInnerDAO(x.get("localCcom5MinuteDAO"))
-      .setOrder(new foam.mlang.order.Comparator[] { foam.mlang.MLang.DESC(foam.nanos.analytics.Candlestick.COUNT) })
+      .setOrder(new foam.mlang.order.Comparator[] { foam.mlang.MLang.DESC(foam.core.analytics.Candlestick.COUNT) })
       .build();
   """,
-  "client": "{\"of\":\"foam.nanos.analytics.Candlestick\"}"
+  "client": "{\"of\":\"foam.core.analytics.Candlestick\"}"
 })
 
 p({
-  "class": "foam.nanos.boot.NSpec",
+  "class": "foam.core.boot.CSpec",
   "name": "localCcomHourlyDAO",
   "serviceScript": """
     return new foam.dao.EasyDAO.Builder(x)
-      .setOf(foam.nanos.analytics.Candlestick.getOwnClassInfo())
+      .setOf(foam.core.analytics.Candlestick.getOwnClassInfo())
       .setAuthorize(false)
       .setSAF(true)
       .build();
   """
 })
 p({
-  "class": "foam.nanos.boot.NSpec",
+  "class": "foam.core.boot.CSpec",
   "name": "comHourlyDAO",
   "serve": true,
   "serviceScript": """
     return new foam.dao.EasyDAO.Builder(x)
-      .setOf(foam.nanos.analytics.Candlestick.getOwnClassInfo())
+      .setOf(foam.core.analytics.Candlestick.getOwnClassInfo())
       .setInnerDAO(x.get("localCcomHourlyDAO"))
-      .setOrder(new foam.mlang.order.Comparator[] { foam.mlang.MLang.DESC(foam.nanos.analytics.Candlestick.OPEN_VALUE_TIME) })
+      .setOrder(new foam.mlang.order.Comparator[] { foam.mlang.MLang.DESC(foam.core.analytics.Candlestick.OPEN_VALUE_TIME) })
       .build();
   """,
-  "client": "{\"of\":\"foam.nanos.analytics.Candlestick\"}"
+  "client": "{\"of\":\"foam.core.analytics.Candlestick\"}"
 })
 
 p({
-  "class": "foam.nanos.boot.NSpec",
+  "class": "foam.core.boot.CSpec",
   "name": "localCcomDailyDAO",
   "serviceScript": """
     return new foam.dao.EasyDAO.Builder(x)
-      .setOf(foam.nanos.analytics.Candlestick.getOwnClassInfo())
+      .setOf(foam.core.analytics.Candlestick.getOwnClassInfo())
       .setAuthorize(false)
       .setJournalType(foam.dao.JournalType.SINGLE_JOURNAL)
       .setJournalName("comDaily")
@@ -368,24 +368,24 @@ p({
   """
 })
 p({
-  "class": "foam.nanos.boot.NSpec",
+  "class": "foam.core.boot.CSpec",
   "name": "comDailyDAO",
   "serve": true,
   "serviceScript": """
     return new foam.dao.EasyDAO.Builder(x)
-      .setOf(foam.nanos.analytics.Candlestick.getOwnClassInfo())
+      .setOf(foam.core.analytics.Candlestick.getOwnClassInfo())
       .setInnerDAO(x.get("localCcomDailyDAO"))
-      .setOrder(new foam.mlang.order.Comparator[] { foam.mlang.MLang.DESC(foam.nanos.analytics.Candlestick.OPEN_VALUE_TIME) })
+      .setOrder(new foam.mlang.order.Comparator[] { foam.mlang.MLang.DESC(foam.core.analytics.Candlestick.OPEN_VALUE_TIME) })
       .build();
   """,
-  "client": "{\"of\":\"foam.nanos.analytics.Candlestick\"}"
+  "client": "{\"of\":\"foam.core.analytics.Candlestick\"}"
 })
 
 p({
-  "class": "foam.nanos.boot.NSpec",
+  "class": "foam.core.boot.CSpec",
   "name": "ccomFoldManager",
   "serviceScript": """
-    return new foam.nanos.analytics.DAOFoldManager.Builder(x)
+    return new foam.core.analytics.DAOFoldManager.Builder(x)
       .setDao((foam.dao.DAO) x.get("localCcom1MinuteDAO"))
       .setPeriodLengthMs(60*1000)
       .build();
@@ -393,10 +393,10 @@ p({
 })
 
 p({
-  "class": "foam.nanos.boot.NSpec",
+  "class": "foam.core.boot.CSpec",
   "name": "com5MinuteReduceManager",
   "serviceScript": """
-    return new foam.nanos.analytics.DAOReduceManager.Builder(x)
+    return new foam.core.analytics.DAOReduceManager.Builder(x)
       .setSourceDAO((foam.dao.DAO) x.get("localCcom1MinuteDAO"))
       .setDestDAO((foam.dao.DAO) x.get("localCcom5MinuteDAO"))
       .setPeriodLengthMs(5*60*1000)
@@ -404,10 +404,10 @@ p({
   """
 })
 p({
-  "class": "foam.nanos.boot.NSpec",
+  "class": "foam.core.boot.CSpec",
   "name": "comHourlyReduceManager",
   "serviceScript": """
-    return new foam.nanos.analytics.DAOReduceManager.Builder(x)
+    return new foam.core.analytics.DAOReduceManager.Builder(x)
       .setSourceDAO((foam.dao.DAO) x.get("localCcom5MinuteDAO"))
       .setDestDAO((foam.dao.DAO) x.get("localCcomHourlyDAO"))
       .setPeriodLengthMs(60*60*1000)
@@ -415,10 +415,10 @@ p({
   """
 })
 p({
-  "class": "foam.nanos.boot.NSpec",
+  "class": "foam.core.boot.CSpec",
   "name": "comDailyReduceManager",
   "serviceScript": """
-    return new foam.nanos.analytics.DAOReduceManager.Builder(x)
+    return new foam.core.analytics.DAOReduceManager.Builder(x)
       .setSourceDAO((foam.dao.DAO) x.get("localCcomHourlyDAO"))
       .setDestDAO((foam.dao.DAO) x.get("localCcomDailyDAO"))
       .setPeriodLengthMs(24*60*60*1000)
@@ -426,20 +426,20 @@ p({
   """
 })
 p({
-  "class":"foam.nanos.boot.NSpec",
+  "class":"foam.core.boot.CSpec",
   "name":"medusaTestObjectDAO",
   "serve":true,
   "serviceScript":`
     return new foam.dao.EasyDAO.Builder(x)
-      .setOf(foam.nanos.medusa.test.MedusaTestObject.getOwnClassInfo())
+      .setOf(foam.core.medusa.test.MedusaTestObject.getOwnClassInfo())
       .setFuid(true)
       .setPm(true)
       .build();
     `,
-  "client":"{\"of\":\"foam.nanos.medusa.test.MedusaTestObject\"}"
+  "client":"{\"of\":\"foam.core.medusa.test.MedusaTestObject\"}"
 })
 p({
-  "class":"foam.nanos.boot.NSpec",
+  "class":"foam.core.boot.CSpec",
   "name":"sfTestObjectDAO",
   "lazy":false,
   "serve":true,
@@ -458,12 +458,12 @@ p({
 })
 
 p({
-  "class":"foam.nanos.boot.NSpec",
+  "class":"foam.core.boot.CSpec",
   "name":"nspecLookupDAO",
   "lazy":false,
   "serviceScript":`
     return new foam.dao.EasyDAO.Builder(x)
-      .setOf(foam.nanos.medusa.NSpecLookup.getOwnClassInfo())
+      .setOf(foam.core.medusa.CSpecLookup.getOwnClassInfo())
       .setJournalType(foam.dao.JournalType.SINGLE_JOURNAL)
       .setJournalName("nspeclookups")
       .setSAF(false)
@@ -474,31 +474,31 @@ p({
 })
 
 p({
-  "class":"foam.nanos.boot.NSpec",
+  "class":"foam.core.boot.CSpec",
   "name":"cronScheduler",
   "lazy":false,
   "serviceScript":"""
-    return new foam.nanos.medusa.MedusaCronScheduler();
+    return new foam.core.medusa.MedusaCronScheduler();
   """
 })
 
 
 p({
-  class:"foam.nanos.boot.NSpec",
+  class:"foam.core.boot.CSpec",
   name:"smtpAgent",
   lazy: false,
   service:{
-    class:"foam.nanos.medusa.MedusaSMTPAgent",
+    class:"foam.core.medusa.MedusaSMTPAgent",
     id: 'smtp'
   }
 })
 
 p({
-  class:"foam.nanos.boot.NSpec",
+  class:"foam.core.boot.CSpec",
   name:"emailFolderAgent",
   lazy: false,
   service:{
-    class:"foam.nanos.medusa.MedusaEmailFolderAgent",
+    class:"foam.core.medusa.MedusaEmailFolderAgent",
     id: 'imap',
     protocol: 'imaps'
   }

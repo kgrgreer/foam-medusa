@@ -1,14 +1,14 @@
 p({
-  "class":"foam.nanos.script.Script",
+  "class":"foam.core.script.Script",
   "id":"main",
   "clusterable":false,
   "code":"""
   /* Set AppConfig version from jar manifest*/
-  import foam.nanos.app.Mode;
-  import foam.nanos.app.AppConfig;
+  import foam.core.app.Mode;
+  import foam.core.app.AppConfig;
 
-  logger = (foam.nanos.logger.Logger) x.get("logger");
-  version = foam.nanos.app.AppConfig.class.getPackage().getImplementationVersion();
+  logger = (foam.core.logger.Logger) x.get("logger");
+  version = foam.core.app.AppConfig.class.getPackage().getImplementationVersion();
   appConfig = x.get("appConfig");
   if ( ! foam.util.SafetyUtil.isEmpty(version) ) {
     appConfig.setVersion(version);
@@ -29,16 +29,16 @@ p({
   // On startup, select() will be against repo services.0.
   // Mediator/Node replay put()s will hit the serviceDAO_ above,
   // which has a listener to Reload the service on change.
-  dao = x.get("nSpecDAO");
+  dao = x.get("cSpecDAO");
   while ( dao != null &&
-          ! ( dao instanceof foam.nanos.auth.AuthorizationDAO ) ) {
+          ! ( dao instanceof foam.core.auth.AuthorizationDAO ) ) {
     dao = dao.getDelegate();
   }
   if ( dao == null )
     logger.error(new Object[] {"bootscript,main,AuthorizationDAO not found to set serviceDAO"});
 
-  dao.setDelegate(new foam.nanos.medusa.MedusaAdapterDAO.Builder(x)
-    .setNSpec(new foam.nanos.boot.NSpec.Builder(x).setName("nSpecDAO").build())
+  dao.setDelegate(new foam.core.medusa.MedusaAdapterDAO.Builder(x)
+    .setCSpec(new foam.core.boot.CSpec.Builder(x).setName("cSpecDAO").build())
     .setDelegate(dao.getDelegate())
     .build());
   """

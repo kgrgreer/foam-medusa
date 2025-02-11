@@ -1,5 +1,5 @@
 p({
-  class:"foam.nanos.script.Script",
+  class:"foam.core.script.Script",
   id:"MedusaCompaction",
   description:"Initiate MedusaEntryDAO Compaction",
   code:"""
@@ -10,9 +10,9 @@ p({
  * nodes: 0 | 1  - 0 ignore, 1 reduce to 1 node
  */
 
-import foam.nanos.medusa.CompactionDAO;
-import foam.nanos.medusa.ClusterConfigSupport;
-import foam.nanos.medusa.ClusterConfigStatusDAO;
+import foam.core.medusa.CompactionDAO;
+import foam.core.medusa.ClusterConfigSupport;
+import foam.core.medusa.ClusterConfigStatusDAO;
 import foam.dao.ProxyDAO;
 
 dryRun = false;
@@ -68,11 +68,11 @@ try {
   """
 })
 p({
-  class:"foam.nanos.script.Script",
+  class:"foam.core.script.Script",
   id:"MedusaLoad",
   description:"Initiate MedusaEntryDAO Loading",
   code:"""
-import foam.nanos.medusa.LoadingAgent;
+import foam.core.medusa.LoadingAgent;
 try {
   a = new LoadingAgent(x);
   a.execute(x);
