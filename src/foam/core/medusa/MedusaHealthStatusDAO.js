@@ -40,7 +40,7 @@ foam.CLASS({
       ClusterConfigSupport support = (ClusterConfigSupport) x.get("clusterConfigSupport");
       ClusterConfig myConfig = support.getConfig(x, support.getConfigId());
 
-      ClusterConfig config = (ClusterConfig) ((DAO) x.get("localClusterConfigDAO")).find(nu.getId());
+      ClusterConfig config = (ClusterConfig) ((DAO) x.get("localClusterConfigDAO")).find(nu.getId().getHostname());
       if ( config != null && // May have received a base Health object.
            ! config.getId().equals(myConfig.getId()) && 
            ( old == null ||
@@ -70,7 +70,7 @@ foam.CLASS({
         long delta = nu.getIndex() - old.getIndex();
         // if ( old != null ) delta -= old.getIndex();
         // explicit fold manager, fold for state
-        ((foam.core.analytics.FoldManager) getX().get("ccomFoldManager"/*getFoldManagerContextKey()*/)).foldForState("medusa.index."+nu.getId(), new java.util.Date(nu.getHeartbeatTime()), delta);
+        ((foam.core.analytics.FoldManager) getX().get("ccomFoldManager"/*getFoldManagerContextKey()*/)).foldForState("medusa.index."+nu.getId().getHostname(), new java.util.Date(nu.getHeartbeatTime()), delta);
       }
 
       return nu;

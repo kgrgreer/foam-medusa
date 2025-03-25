@@ -16,7 +16,8 @@ foam.CLASS({
   ],
 
   tableColumns: [
-    'id',
+    'hostname',
+    'appName',
     'version',
     'medusaType',
     'medusaStatus',
@@ -113,7 +114,7 @@ foam.CLASS({
     setIsPrimary(config.getIsPrimary());
     setMedusaStatus(config.getStatus());
     setMedusaType(config.getType());
-    setName(config.getName());
+    setHostname(config.getName());
     setRealm(config.getRealm());
     setRegion(config.getRegion());
     setZone(config.getZone());
