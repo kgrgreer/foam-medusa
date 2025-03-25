@@ -26,7 +26,9 @@ foam.CLASS({
     'static foam.mlang.MLang.COUNT',
     'static foam.mlang.MLang.EQ',
     'static foam.mlang.MLang.GTE',
+    'foam.core.app.AppConfig',
     'foam.core.app.Health',
+    'foam.core.app.HealthId',
     'foam.core.alarming.Alarm',
     'foam.core.logger.Logger',
     'foam.core.logger.Loggers',
@@ -139,7 +141,8 @@ foam.CLASS({
             cfg.setStatus(Status.OFFLINE);
             cfg.setIsPrimary(false);
             config = (ClusterConfig) getDao().put_(x, cfg);
-            Health health = (Health) ((DAO) x.get("healthDAO")).find(config.getId());
+            AppConfig app = (AppConfig) x.get("appConfig");
+            Health health = (Health) ((DAO) x.get("healthDAO")).find(new HealthId(config.getId(), app.getName()));
             if ( health != null &&
                  health instanceof MedusaHealth ) {
               MedusaHealth medusaHealth = (MedusaHealth) health.fclone();
