@@ -3,13 +3,18 @@ p({
   "id":"main",
   "clusterable":false,
   "code":"""
-  /* Set AppConfig version from jar manifest*/
+  /* Set AppConfig properties from jar manifest*/
   import foam.core.app.Mode;
   import foam.core.app.AppConfig;
 
   logger = (foam.core.logger.Logger) x.get("logger");
-  version = foam.core.app.AppConfig.class.getPackage().getImplementationVersion();
   appConfig = x.get("appConfig");
+  title = foam.core.app.AppConfig.class.getPackage().getImplementationTitle();
+  if ( foam.util.SafetyUtil.isEmpty(appConfig.getName()) &&
+       ! foam.util.SafetyUtil.isEmpty(title) ) {
+    appConfig.setName(title);
+  }
+  version = foam.core.app.AppConfig.class.getPackage().getImplementationVersion();
   if ( ! foam.util.SafetyUtil.isEmpty(version) ) {
     appConfig.setVersion(version);
   } else if ( foam.util.SafetyUtil.isEmpty(appConfig.getVersion()) ) {
@@ -21,9 +26,12 @@ p({
     m = Mode.forLabel(mode);
     appConfig.setMode(m);
   }
-
-  logger.log(new Object[] {"AppConfig", "version", version});
-  print("AppConfig,version,"+version);
+  port = System.getProperty("http.port");
+  if ( port != null ) {
+    appConfig.setUrl(appConfig.getUrl().replace("8080", port));
+  }
+  logger.log(new Object[] {"AppConfig", appConfig.getName(), appConfig.getVersion()});
+  print("AppConfig "+appConfig.getName()+" "+appConfig.getVersion());
 
   // See Boot.java serviceDAO setup.
   // On startup, select() will be against repo services.0.
