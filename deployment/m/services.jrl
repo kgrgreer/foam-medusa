@@ -233,7 +233,7 @@ p({
   "parameters":false,
   "service": {
     "class":"foam.core.app.AppConfig",
-    "mode":1
+    "mode":2
   }
 })
 
