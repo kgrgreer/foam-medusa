@@ -1,1 +1,6 @@
-foam.POM({name:'m'});
+foam.POM({
+  name:'m',
+  projects: [
+    { name: '../../pom' }
+  ]
+});

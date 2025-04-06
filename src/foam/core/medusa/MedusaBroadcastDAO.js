@@ -83,13 +83,6 @@ foam.CLASS({
       MedusaEntry old = (MedusaEntry) getDelegate().find_(x, entry.getId());
       entry = (MedusaEntry) getDelegate().put_(x, entry).fclone();
 
-      if ( support.getStandAlone() ) {
-        if ( old == null ) {
-          return ((DAO) x.get(getServiceName())).put_(x, entry);
-        }
-        return entry;
-      }
-
       if ( myConfig.getType() == MedusaType.NODE &&
            myConfig.getStatus() == Status.ONLINE ) {
         entry = (MedusaEntry) submit(x, entry, DOP.PUT);

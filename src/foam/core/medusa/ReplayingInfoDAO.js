@@ -22,7 +22,8 @@ foam.CLASS({
   properties: [
     {
       name: 'updateIndex',
-      class: 'Boolean'
+      class: 'Boolean',
+      value: true
     }
   ],
 

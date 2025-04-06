@@ -10,6 +10,7 @@ foam.POM({
     { name: "foam/box/sf/pom" },
     { name: "foam/core/cron/pom" },
     { name: "foam/core/medusa/pom" },
+    { name: "foam/core/security/pom" },
     { name: "foam/core/ticket/pom" }
   ]
 });
