@@ -118,13 +118,13 @@ foam.CLASS({
       type: 'Object',
       javaCode: `
       final Logger logger = Loggers.logger(x, this);
-      logger.debug("submit", dop.getLabel(), obj.getClass().getSimpleName());
+      // logger.debug("submit", dop.getLabel(), obj.getClass().getSimpleName());
 
       ClusterConfigSupport support = (ClusterConfigSupport) x.get("clusterConfigSupport");
 
       for ( ClusterConfig config : support.getBroadcastMediators() ) {
         String id = config.getId();
-        logger.debug("submit", "job", id, dop.getLabel(), "assembly");
+        // logger.debug("submit", "job", id, dop.getLabel(), "assembly");
         inFlight_.getAndIncrement();
         getQueue(x, id).enqueue(new AbstractAssembly() {
           public void executeJob() {

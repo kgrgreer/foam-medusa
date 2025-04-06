@@ -19,10 +19,6 @@ foam.CLASS({
   ],
 
   properties: [
-    // {
-    //   name: 'dao',
-    //   class: 'foam.dao.DAOProperty'
-    // },
     {
       name: 'journal',
       class: 'FObjectProperty',
