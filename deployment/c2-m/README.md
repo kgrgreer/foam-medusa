@@ -9,11 +9,12 @@ These build scripts are designed to run all mediators and nodes in the same memo
 * need at least 16Gbytes free - 4Gb x 4
 
 ## Machine configuration
-/etc/hosts:
+<code>/etc/hosts:
 127.0.0.1       mediator1
 127.0.0.1       mediator2
 127.0.0.1       node1
 127.0.0.1       node2
+</code>
 
 ## Build scripts
 ### nodes
