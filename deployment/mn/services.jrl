@@ -1,19 +1,9 @@
-// p({
-//   "class":"foam.core.boot.CSpec",
-//   "name":"medusaNodeBootstrapAgent",
-//   "lazy":false,
-//   "service": {
-//     "class": "foam.core.medusa.MedusaNodeBootstrapAgent"
-//   }
-// })
-
 p({
   "class":"foam.core.boot.CSpec",
   "name":"medusaNodeDAO",
   "lazy":false,
   "serve":true,
   "serviceScript":`
-    // mdao = new foam.dao.MDAO(foam.core.medusa.MedusaEntry.getOwnClassInfo());
     journal = new foam.core.security.DigestJournal(
        x.put(foam.core.fs.Storage.class, x.get(foam.core.fs.FileSystemStorage.class)),
        "ledger",
