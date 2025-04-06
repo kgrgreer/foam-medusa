@@ -1,22 +1,38 @@
-# Run 2 Mediator, 2 Node on same machine
-# NOTE: need at least 16Gbytes free - 4Gb x 4
+# c2 - 2 Mediator, 2 Node Medusa Cluster
 
+Configuration and build scripts to test/run a Medusa cluster locally.
+
+These build scripts are designed to run all mediators and nodes in the same memory space.
+
+## Requirements
+
+* need at least 16Gbytes free - 4Gb x 4
+
+## Machine configuration
 /etc/hosts:
 127.0.0.1       mediator1
 127.0.0.1       mediator2
 127.0.0.1       node1
 127.0.0.1       node2
 
-# nodes
-foam-medusa/deployment/c2-mn/build-1.sh [-j]
-foam-medusa/deployment/c2-mn/build-2.sh [-jc]
+## Build scripts
+### nodes
+1. `foam-medusa/deployment/c2-mn/build-1.sh [-j]`
+1. `foam-medusa/deployment/c2-mn/build-2.sh [-jc]`
 
-# mediators
-foam-medusa/deployment/c2-mm/build-1.sh
-foam-medusa/deployment/c2-mm/build-2.sh [-c]
+### mediators
+1. `foam-medusa/deployment/c2-mm/build-1.sh`
+1. `foam-medusa/deployment/c2-mm/build-2.sh [-c]`
 
-# 'User' interface at https://mediator1:8100 or https://mediator2:8110
-#  or https://nbp:8100, https://nbp:8110
-# 'Admin' interface at https://localhost:8100 or https://localhost:8110
+## Website
+### User / Themed website
 
-# To drop journals - build the node with the -j
+* `https://mediator1:8100`
+* `https://mediator2:8110`
+
+### Admin access
+
+* `https://localhost:8100`
+* `https://localhost:8110`
+
+* To drop journals - build the node with the -j

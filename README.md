@@ -7,4 +7,4 @@ See flow docs
 * #flow-doc/CronMedusa
 
 Test/example Medusa cluster configuration and build scripts:
-* deployment/c2-m/README.md
+* [deployment/c2-m/README.md] (https://github.com/kgrgreer/foam-medusa/blob/main/deployment/c2-m/README.md)
