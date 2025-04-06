@@ -1,0 +1,12 @@
+// haproxy for macos
+https://formulae.brew.sh/formula/haproxy
+
+// The following assumes installation in /etc/haproxy
+
+// example config
+// see haproxy.cfg
+cp deployment/cluster_2/haproxy.cfg /etc/haproxy/haproxy.cfg
+
+// install ca cert and cert
+cp foam3/tools/cert/foamdev-ca.crt /etc/haproxy/ssl/certs/foamdev-ca.crt
+cp foam3/tools/cert/foamdev.pem  /etc/haproxy/ssl/star_foamdev.net/star_foamdev_net.pem

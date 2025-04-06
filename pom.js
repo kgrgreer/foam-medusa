@@ -7,6 +7,8 @@
 foam.POM({
   name: "foam-medusa",
   projects: [
+    { name: '../pom' },
+    // { name: "../foam3/pom" },
     { name: "src/pom" }
   ]
 });

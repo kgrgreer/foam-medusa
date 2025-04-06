@@ -1,11 +1,11 @@
-p({
-  "class":"foam.core.boot.CSpec",
-  "name":"medusaNodeBootstrapAgent",
-  "lazy":false,
-  "service": {
-    "class": "foam.core.medusa.MedusaNodeBootstrapAgent"
-  }
-})
+// p({
+//   "class":"foam.core.boot.CSpec",
+//   "name":"medusaNodeBootstrapAgent",
+//   "lazy":false,
+//   "service": {
+//     "class": "foam.core.medusa.MedusaNodeBootstrapAgent"
+//   }
+// })
 
 p({
   "class":"foam.core.boot.CSpec",
@@ -13,39 +13,40 @@ p({
   "lazy":false,
   "serve":true,
   "serviceScript":`
-    mdao = new foam.dao.MDAO(foam.core.medusa.MedusaEntry.getOwnClassInfo());
-    mdao = new foam.core.medusa.ReplayingInfoDAO.Builder(x)
-      .setUpdateIndex(true)
-      .setDelegate(new foam.dao.FixedSizeDAO.Builder(x)
-        .setComparator(foam.mlang.MLang.DESC(foam.core.medusa.MedusaEntry.INDEX))
-        .setSize(100000)
-        .setDelegate(mdao)
-        .build())
-      .build();
+    // mdao = new foam.dao.MDAO(foam.core.medusa.MedusaEntry.getOwnClassInfo());
+    journal = new foam.core.security.DigestJournal(
+       x.put(foam.core.fs.Storage.class, x.get(foam.core.fs.FileSystemStorage.class)),
+       "ledger",
+       new foam.core.security.MessageDigest(x));
+
     return new foam.dao.EasyDAO.Builder(x)
       .setOf(foam.core.medusa.MedusaEntry.getOwnClassInfo())
-      .setMdao(mdao)
-      .setInnerDAO(
-        new foam.core.medusa.MedusaUniqueDAO.Builder(x)
-          .setDelegate(new foam.core.medusa.MedusaNodeJDAO(x, mdao,
-            new foam.dao.java.JDAO(x, mdao, "ledger")))
-          .build())
+      .setMdao(new foam.dao.MDAO(foam.core.medusa.MedusaEntry.getOwnClassInfo()))
       .setRuler(false)
       .setCluster(false)
       .setPm(true)
+      .setOm(true)
       .setDecorator(new foam.core.medusa.MedusaEntryNoRemoveDAO.Builder(x)
-      .setDelegate(new foam.core.medusa.ReplayNodeDAO.Builder(x)
-        .setJournal(new foam.dao.F3FileJournal.Builder(x.put(foam.core.fs.Storage.class, x.get(foam.core.fs.FileSystemStorage.class)))
-          .setFilename("ledger")
-          .setCreateFile(false)
-          .build())
       .setDelegate(new foam.core.medusa.MedusaSetNodeDAO.Builder(x)
       .setDelegate(new foam.core.medusa.MedusaHashingDAO.Builder(x)
       .setDelegate(new foam.core.medusa.MedusaSigningDAO.Builder(x)
+      .setDelegate(new foam.core.medusa.MedusaUniqueDAO.Builder(x)
       .setDelegate(new foam.core.medusa.MedusaBroadcastDAO.Builder(x)
       .setDelegate(new foam.core.medusa.MedusaBroadcastNARegionDAO.Builder(x)
-        .setDelegate(new foam.dao.NullDAO(x, foam.core.medusa.MedusaEntry.getOwnClassInfo()))
-        .build())
+      .setDelegate(new foam.core.medusa.MedusaNodeJDAO.Builder(x)
+        .setJournal(journal)
+      .setDelegate(new foam.core.medusa.ReplayNodeDAO.Builder(x)
+        .setJournal(journal)
+      .setDelegate(new foam.core.medusa.ReplayingInfoDAO.Builder(x)
+      .setDelegate(new foam.dao.FixedSizeDAO.Builder(x)
+        .setComparator(foam.mlang.MLang.DESC(foam.core.medusa.MedusaEntry.INDEX))
+        .setSize(100000)
+      .setDelegate(new foam.dao.NullDAO(x, foam.core.medusa.MedusaEntry.getOwnClassInfo()))
+      .build())
+      .build())
+      .build())
+      .build())
+      .build())
       .build())
       .build())
       .build())

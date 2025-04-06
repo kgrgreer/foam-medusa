@@ -83,13 +83,6 @@ foam.CLASS({
       MedusaEntry old = (MedusaEntry) getDelegate().find_(x, entry.getId());
       entry = (MedusaEntry) getDelegate().put_(x, entry).fclone();
 
-      if ( support.getStandAlone() ) {
-        if ( old == null ) {
-          return ((DAO) x.get(getServiceName())).put_(x, entry);
-        }
-        return entry;
-      }
-
       if ( myConfig.getType() == MedusaType.NODE &&
            myConfig.getStatus() == Status.ONLINE ) {
         entry = (MedusaEntry) submit(x, entry, DOP.PUT);
@@ -125,13 +118,13 @@ foam.CLASS({
       type: 'Object',
       javaCode: `
       final Logger logger = Loggers.logger(x, this);
-      // logger.debug("submit", dop.getLabel(), obj.getClass().getSimpleName());
+      logger.debug("submit", dop.getLabel(), obj.getClass().getSimpleName());
 
       ClusterConfigSupport support = (ClusterConfigSupport) x.get("clusterConfigSupport");
 
       for ( ClusterConfig config : support.getBroadcastMediators() ) {
         String id = config.getId();
-        // logger.debug("submit", "job", id, dop.getLabel(), "assembly");
+        logger.debug("submit", "job", id, dop.getLabel(), "assembly");
         inFlight_.getAndIncrement();
         getQueue(x, id).enqueue(new AbstractAssembly() {
           public void executeJob() {

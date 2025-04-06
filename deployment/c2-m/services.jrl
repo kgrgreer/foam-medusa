@@ -1,0 +1,7 @@
+// enable for two+two as heartbeat will fail
+p({
+  "class":"foam.core.boot.CSpec",
+  "name":"clusterConfigMonitor",
+  "lazy":false,
+  "serviceClass":"foam.core.medusa.ClusterConfigMonitor"
+})

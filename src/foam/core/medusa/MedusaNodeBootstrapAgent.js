@@ -79,7 +79,7 @@ foam.CLASS({
           replaying.setEndTime(new java.util.Date());
           Max max = (Max) dao.select(MAX(MedusaEntry.INDEX));
           replaying.setReplaying(false);
-        ((foam.core.om.OMLogger) x.get("OMLogger")).log("medusa.bootstrap.replay.end");
+          ((foam.core.om.OMLogger) x.get("OMLogger")).log("medusa.bootstrap.replay.end");
           if ( max != null &&
                max.getValue() != null ) {
             replaying.updateIndex(x, (Long)max.getValue());
