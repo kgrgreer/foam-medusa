@@ -121,10 +121,14 @@ foam.CLASS({
                .build();
               dao.select(seq);
               replaying.setReplaying(false);
-              replaying.setMinIndex((Long)min.getValue());
-              replaying.setMaxIndex((Long)max.getValue());
-              replaying.updateIndex(x, (Long)max.getValue());
-              replaying.setReplayIndex((Long)max.getValue());
+              if ( min.getValue() != null ) {
+                replaying.setMinIndex((Long)min.getValue());
+              }
+              if ( max.getValue() != null ) {
+                replaying.setMaxIndex((Long)max.getValue());
+                replaying.updateIndex(x, (Long)max.getValue());
+                replaying.setReplayIndex((Long)max.getValue());
+              }
               Loggers.logger(x, this).debug("execute,replayComplate", replaying.getReplayIndex());
 
               config = (ClusterConfig) config.fclone();
