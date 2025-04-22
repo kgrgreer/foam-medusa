@@ -371,7 +371,9 @@ configuration for contacting the primary node.`,
           ))
         .select(COUNT());
       boolean result = ((Long)count.getValue()).intValue() >= getMediatorQuorum();
-      getLogger().info("hasMediatorQuorum", "count", ((Long)count.getValue()).intValue(), "quorum", getMediatorQuorum(), result);
+      if ( ! result ) {
+        getLogger().info("hasMediatorQuorum", "count", ((Long)count.getValue()).intValue(), "quorum", getMediatorQuorum(), result);
+      }
       pm.log(getX());
       return result;
       `
@@ -535,7 +537,6 @@ configuration for contacting the primary node.`,
           return false;
         }
       }
-      getLogger().debug("hasNodeQuorum", "true");
       pm.log(getX());
       return true;
       `
