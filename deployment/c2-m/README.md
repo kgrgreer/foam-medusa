@@ -19,11 +19,11 @@ These build scripts are designed to run all mediators and nodes in the same memo
 ## Build scripts
 ### nodes
 1. `foam-medusa/deployment/c2-mn/build-1.sh [-j]`
-1. `foam-medusa/deployment/c2-mn/build-2.sh [-jc]`
+1. `foam-medusa/deployment/c2-mn/build-2.sh [-j]`
 
 ### mediators
 1. `foam-medusa/deployment/c2-mm/build-1.sh`
-1. `foam-medusa/deployment/c2-mm/build-2.sh [-c]`
+1. `foam-medusa/deployment/c2-mm/build-2.sh`
 
 ## Website
 ### User / Themed website
@@ -36,4 +36,6 @@ These build scripts are designed to run all mediators and nodes in the same memo
 * `https://localhost:8100`
 * `https://localhost:8110`
 
-* To drop journals - build the node with the -j
+## Notes
+* To drop node ledger - build the node with the -j
+* All builds execute cleanAll - future build support may eliminate this requirement. 
