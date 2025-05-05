@@ -205,6 +205,10 @@ foam.POM({
       flags: "js|java" },
     { name: "ZoneCView",
       flags: "js" },
+    { name: "benchmark/PingCmd",
+      flags: "js|java" },
+    { name: "benchmark/PingDAO",
+      flags: "js|java" },
     { name: "sf/MedusaSFManager",
       flags: "js|java" },
     { name: "sf/SFBroadcastDAO",
@@ -212,7 +216,12 @@ foam.POM({
     { name: "sf/SFBroadcastReceiverDAO",
       flags: "js|java" },
     { name: "sf/SFMedusaClientDAO",
-      flags: "js|java" }
+      flags: "js|java" },
+    // Following test code employed in production verification
+    { name: "test/MedusaTestObject",                                  flags: "js|java" },
+    { name: "test/MedusaTestObjectNested",                            flags: "js|java" },
+    { name: "test/MedusaTestObjectCompactionSink",                    flags: "js|java" },
+    { name: "test/SFTestObject",                                      flags: "js|java" }
   ],
 
   javaFiles: [
