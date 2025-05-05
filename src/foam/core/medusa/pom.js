@@ -1,7 +1,8 @@
 foam.POM({
   name: "medusa",
   projects: [
-    { name: "test/pom"},
+    { name: "benchmark/pom",                                          flags: "test" },
+    { name: "test/pom",                                               flags: "test" },
   ],
   files: [
     { name: "AccessMode",
@@ -204,20 +205,6 @@ foam.POM({
       flags: "js|java" },
     { name: "ZoneCView",
       flags: "js" },
-    { name: "benchmark/DaggerLinkBenchmark",
-      flags: "js|java" },
-    { name: "benchmark/DaggerVerifyBenchmark",
-      flags: "js|java" },
-    { name: "benchmark/MedusaPingBenchmark",
-      flags: "js|java" },
-    { name: "benchmark/MedusaTestBenchmark",
-      flags: "js|java" },
-    { name: "benchmark/MedusaCUTestBenchmark",
-      flags: "js|java" },
-    { name: "benchmark/PingCmd",
-      flags: "js|java" },
-    { name: "benchmark/PingDAO",
-      flags: "js|java" },
     { name: "sf/MedusaSFManager",
       flags: "js|java" },
     { name: "sf/SFBroadcastDAO",
@@ -225,18 +212,12 @@ foam.POM({
     { name: "sf/SFBroadcastReceiverDAO",
       flags: "js|java" },
     { name: "sf/SFMedusaClientDAO",
-      flags: "js|java" },
-    { name: "test/MedusaEntryParseFormatTest",
-      flags: "js|java" },
-    { name: "test/MedusaTestObject",
-      flags: "js|java" },
-    { name: "test/MedusaTestObjectCompactionSink",
-      flags: "js|java" },
-    { name: "test/MedusaTestObjectNested",
-      flags: "js|java" },
-    { name: "test/MedusaTestObjectDIGBenchmark",
-      flags: "js|java" },
-    { name: "test/MedusaTestObjectDistributedDIGBenchmarkRunner",
       flags: "js|java" }
+  ],
+
+  javaFiles: [
+    { name: "HealthCheckWebAgent" },
+    { name: "MedusaInfoWebAgent" },
+    { name: "MedusaTransientJSONFObjectFormatter" }
   ]
 });
