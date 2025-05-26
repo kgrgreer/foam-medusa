@@ -1,14 +1,13 @@
 #!/bin/bash
-if [ "$#" -ne 2 ]; then
-    echo "usage: $0 entry node-list"
+if [ "$#" -ne 3 ]; then
+    echo "usage: $0 name entry node-list"
     exit 1
 fi
 
-source $(dirname "$0")/env.sh
+APP_NAME=$1
+entry=$2
 
-entry=$1
-
-exec 4<$2
+exec 4<$3
 entriesFound=0
 nodeCount=0
 # iterate through nodes and count how many nodes have requested index
@@ -31,7 +30,7 @@ if [ "$quorum" -lt "$entriesFound" ]; then
 fi
 
 finalIndex=$entry
-exec 4<$2
+exec 4<$3
 echo $finalIndex
 # on each node decrement given index to find out what is the smallest index out of all the nodes
 while read -u4 m; do
@@ -45,7 +44,7 @@ while read -u4 m; do
     fi
 done
 echo $finalIndex
-exec 4<$2
+exec 4<$3
 
 # for each node trim the ledger to the smallest index
 while read -u4 m; do

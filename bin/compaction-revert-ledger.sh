@@ -1,13 +1,13 @@
 #!/bin/bash
-if [ "$#" -ne 2 ]; then
-    echo "usage: $0 index node-list"
+if [ "$#" -ne 3 ]; then
+    echo "usage: $0 name index node-list"
     exit 1
 fi
 
-source $(dirname "$0")/env.sh
+APP_NAME=$1
 
-index=$1
-exec 4<$2
+index=$2
+exec 4<$3
 while read -u4 m; do
     echo $m
     echo "mv /opt/${APP_NAME}/journals/ledger.$index /opt/${APP_NAME}/journals/ledger"
