@@ -1,6 +1,6 @@
 #!/bin/bash
 if [ "$#" -ne 2 ]; then
-    echo "usage: $0 name trim_nodes.sh-list"
+    echo "usage: $0 name node-list"
     exit 1
 fi
 
