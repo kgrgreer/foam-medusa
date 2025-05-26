@@ -1,16 +1,15 @@
 #!/bin/bash
-if [ "$#" -ne 2 ]; then
-    echo "usage: $0 dir node-list"
+if [ "$#" -ne 3 ]; then
+    echo "usage: $0 name dir node-list"
     exit 1
 fi
 
-source $(dirname "$0")/env.sh
-
+APP_NAME=$1
 d=$(date +%Y%m%d%H%M%S)
 echo $d
-dir=$1/$d
+dir=$2/$d
 
-exec 4<$2
+exec 4<$3
 while read -u4 m; do
     echo $m
     mkdir -p $dir
