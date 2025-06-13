@@ -13,7 +13,7 @@ foam.CLASS({
     'foam.lang.X',
     'foam.lang.ClassInfo',
     'foam.box.Box',
-    'foam.box.Message',
+    'foam.box.Envelope',
     'foam.dao.*',
     'foam.lang.FObject',
     'foam.mlang.sink.Max',
@@ -266,7 +266,7 @@ foam.CLASS({
       args: 'Context x, SFEntry entry',
       javaCode: `
         Object delegate = getDelegateObject();
-        if ( delegate instanceof Box ) ((Box) delegate).send((Message) entry.getObject());
+        if ( delegate instanceof Box ) ((Box) delegate).send((Envelope) entry.getObject());
         else if ( delegate instanceof DAO ) ((DAO) delegate).put_(x, entry.getObject());
         else if ( delegate instanceof Sink ) ((Sink) delegate).put(entry.getObject(), null);
         else {

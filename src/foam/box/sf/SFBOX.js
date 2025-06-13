@@ -13,7 +13,7 @@ foam.CLASS({
   javaImports: [
     'foam.lang.FObject',
     'foam.box.Box',
-    'foam.box.Message'
+    'foam.box.Envelope'
   ],
   
   properties: [
@@ -33,14 +33,14 @@ foam.CLASS({
     {
       name: 'send',
       javaCode: `
-        this.storeAndForward((FObject) msg);
+        this.storeAndForward((FObject) envelope);
       `
     },
     {
       name: 'submit',
       args: 'Context x, SFEntry entry',
       javaCode: `
-        getDelegate().send((Message) entry.getObject());
+        getDelegate().send((foam.box.Envelope)entry.getObject());
       `
     },
     {
