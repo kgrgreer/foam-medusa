@@ -5,3 +5,14 @@ p({
   "lazy":false,
   "serviceClass":"foam.core.medusa.ClusterConfigMonitor"
 })
+p({
+  "class": "foam.core.boot.CSpec",
+  "name": "healthHeartbeatService",
+  "lazy": false,
+  "service": {
+    class: "foam.core.medusa.MedusaHealthHeartbeatService",
+    useMulticast: true,
+    multicastAddress: "230.22.41.0",
+    port: 52241
+  }
+})

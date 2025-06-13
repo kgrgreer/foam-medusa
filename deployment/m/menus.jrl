@@ -104,6 +104,7 @@ p({
   class: "foam.core.menu.Menu",
   id: "foam.core.medusa.medusaHealthWidget",
   label: "Medusa Health",
+  keywords: ["health","heartbeat","check","cluster","medusa"],
   handler: {
     class: "foam.core.menu.ViewMenu",
     view: {
