@@ -51,13 +51,17 @@ foam.CLASS({
           }
           return 0;
         });
-      `
+      `,
+      transient: true,
+      visibility: 'HIDDEN'
     },
     {
       name: 'sfs',
       class: 'Map',
       javaCloneProperty: '//noop',
-      javaFactory: `return new java.util.concurrent.ConcurrentHashMap();`
+      javaFactory: `return new java.util.concurrent.ConcurrentHashMap();`,
+      transient: true,
+      visibility: 'HIDDEN'
     },
     {
       class: 'String',

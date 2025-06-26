@@ -122,12 +122,14 @@ configuration for contacting the primary node.`,
       name: 'mdaos',
       class: 'Map',
       javaFactory: 'return new HashMap();',
-      visibility: 'HIDDEN'
+      visibility: 'HIDDEN',
+      transient: true
     },
     {
       name: 'nodeBuckets',
       class: 'List',
-      visibility: 'RO',
+      visibility: 'HIDDEN',
+      transient: true,
       javaFactory: `
       return new ArrayList();
       `
