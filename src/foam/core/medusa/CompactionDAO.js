@@ -331,7 +331,7 @@ as 'ignoreHealth'.
         }
       }
 
-      ClusterConfig[] mediators = support.getSfBroadcastMediators();
+      ClusterConfig[] mediators = support.getSafBroadcastMediators();
       for ( ClusterConfig cfg : mediators ) {
         MedusaHealth health = (MedusaHealth) healthDAO.find(cfg.getId());
         if ( health == null ||
@@ -482,7 +482,7 @@ as 'ignoreHealth'.
       // update other mediators
       final ClusterConfigSupport support = (ClusterConfigSupport) x.get("clusterConfigSupport");
       final ClusterConfig myConfig = support.getConfig(x, support.getConfigId());
-      List<ClusterConfig> mediators = Arrays.stream(support.getSfBroadcastMediators()).collect(Collectors.toList());
+      List<ClusterConfig> mediators = Arrays.stream(support.getSafBroadcastMediators()).collect(Collectors.toList());
 
       AssemblyLine line = new AsyncAssemblyLine(x, null, support.getThreadPoolName());
       final Map failures = new HashMap();
@@ -649,7 +649,7 @@ as 'ignoreHealth'.
 
       final ClusterConfigSupport support = (ClusterConfigSupport) x.get("clusterConfigSupport");
       final ClusterConfig myConfig = support.getConfig(x, support.getConfigId());
-      List<ClusterConfig> mediators = Arrays.stream(support.getSfBroadcastMediators()).collect(Collectors.toList());
+      List<ClusterConfig> mediators = Arrays.stream(support.getSafBroadcastMediators()).collect(Collectors.toList());
 
       AssemblyLine line = new AsyncAssemblyLine(x, null, support.getThreadPoolName());
       final Map failures = new HashMap();

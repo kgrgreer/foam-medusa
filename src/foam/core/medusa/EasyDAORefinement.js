@@ -23,8 +23,8 @@ foam.CLASS({
       type: 'foam.dao.DAO',
       javaCode: `
         if ( getMdao() != null ) {
-          if ( getSAF() ) {
-            return new foam.core.medusa.sf.SFBroadcastDAO.Builder(getX())
+          if ( getSaf() ) {
+            return new foam.core.medusa.saf.SAFBroadcastDAO.Builder(getX())
             .setCSpec(getCSpec())
             .setDelegate(delegate)
             .build();

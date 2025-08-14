@@ -7,7 +7,6 @@
 foam.POM({
   name: "src",
   projects: [
-    { name: "foam/box/sf/pom" },
     { name: "foam/core/cron/pom" },
     { name: "foam/core/medusa/pom" },
     { name: "foam/core/security/pom" },

@@ -292,3 +292,10 @@ p({
     port: 52241
   }
 })
+p({
+  "class": "foam.core.boot.CSpec",
+  "name": "shutdownWatcher",
+  "enabled": false,
+  "lazy": false,
+  "serviceClass": "foam.core.app.ShutdownWatcher"
+})

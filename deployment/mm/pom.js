@@ -4,7 +4,7 @@ foam.POM({
     { name: '../m/pom' }
   ],
   files: [
-    { name: "../../src/foam/core/medusa/EasyDAORefinement", flags: "js|java" }
+    { name: "../../src/foam/core/medusa/EasyDAORefinement",      flags: "js|java" }
   ],
   tasks: [
     function setRunArgs() {

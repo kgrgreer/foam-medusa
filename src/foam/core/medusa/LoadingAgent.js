@@ -134,7 +134,7 @@ From the primary of a completely ONLINE new medusa cluster:
         }
       }
 
-      ClusterConfig[] mediators = support.getSfBroadcastMediators();
+      ClusterConfig[] mediators = support.getSafBroadcastMediators();
       for ( ClusterConfig cfg : mediators ) {
         MedusaHealth health = (MedusaHealth) healthDAO.find(cfg.getId());
         if ( health == null ||
@@ -177,8 +177,8 @@ From the primary of a completely ONLINE new medusa cluster:
               return;
             }
             DAO delegate = null;
-            if ( easyDAO.getSAF() ) {
-              delegate = new foam.core.medusa.sf.SFBroadcastDAO.Builder(x)
+            if ( easyDAO.getSaf() ) {
+              delegate = new foam.core.medusa.saf.SAFBroadcastDAO.Builder(x)
                 .setCSpec(service)
                 .setDelegate(easyDAO.getLastDao())
                 .build();

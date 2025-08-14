@@ -5,20 +5,21 @@
  */
 
 foam.CLASS({
-  package: 'foam.core.medusa.sf',
-  name: 'SFMedusaClientDAO',
-  extends: 'foam.box.sf.SFDAO',
-  
+  package: 'foam.core.medusa.saf',
+  name: 'SAFMedusaClientDAO',
+  extends: 'foam.core.saf.SAFClientDAO',
+
   javaImports: [
-    'foam.lang.FObject',
-    'foam.dao.DAO',
     'foam.core.medusa.ClusterConfig',
     'foam.core.medusa.ClusterConfigSupport',
     'foam.core.pm.PM',
-    'foam.box.sf.SFEntry',
-    'foam.box.sf.SFManager'
+    'foam.core.saf.SAFEntry',
+    'foam.core.saf.SAFManager', // resolve compilation failure
+    'foam.dao.DAO',
+    'foam.lang.FObject',
+    'foam.lang.X'
   ],
-  
+
   properties: [
     {
       name: 'myConfig',
@@ -41,13 +42,6 @@ foam.CLASS({
       `
     },
     {
-      name: 'serviceName',
-      class: 'String',
-      javaFactory: `
-      return "sfBroadcastReceiverDAO";
-      `
-    },
-    {
       class: 'Proxy',
       of: 'foam.dao.DAO',
       name: 'delegate',
@@ -59,21 +53,13 @@ foam.CLASS({
       `
     }
   ],
-  
+
   methods: [
     {
-      name: 'put',
-      code: function() {},
-      swiftCode: '// NOOP',
-      javaCode: `
-      return this.storeAndForward((FObject) obj);
-      `
-    },
-    {
       name: 'submit',
-      args: 'Context x, SFEntry entry',
+      args: 'X x, SAFEntry entry',
       javaCode: `
-      PM pm = new PM("SMMedusaClientDAO", "submit", getMyConfig().getId(), getToConfig().getId());
+      PM pm = new PM("SAFMedusaClientDAO", "submit", getMyConfig().getId(), getToConfig().getId());
       try {
         getDelegate().put(entry);
       } catch (RuntimeException e) {
@@ -83,12 +69,6 @@ foam.CLASS({
         pm.log(x);
       }
       `
-    },
-    {
-      name: 'createDelegate',
-      documentation: 'creating delegate when start up',
-      javaCode: `
-      `
-    },
+    }
   ]
 });

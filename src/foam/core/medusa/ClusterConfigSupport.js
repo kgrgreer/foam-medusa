@@ -221,11 +221,11 @@ configuration for contacting the primary node.`,
     },
     {
       documentation: 'Mediators to broadcast to',
-      name: 'sfBroadcastMediators',
+      name: 'safBroadcastMediators',
       class: 'FObjectArray',
       of: 'foam.core.medusa.ClusterConfig',
       javaFactory: `
-      PM pm = PM.create(getX(), this.getClass().getSimpleName(), "getSfBroascastMediators");
+      PM pm = PM.create(getX(), this.getClass().getSimpleName(), "getSafBroascastMediators");
       ClusterConfig myConfig = getConfig(getX(), getConfigId());
 
       if ( myConfig.getType() == MedusaType.NODE ) return new ClusterConfig[0];
