@@ -222,7 +222,7 @@ p({
       .setFuid(true)
       .setJournalType(foam.dao.JournalType.NO_JOURNAL)
       .setJournalName("ruleHistory")
-      .setSAF(true)
+      .setSaf(true)
       .setRuler(false)
       .setPm(true)
       .setFixedSize(new foam.dao.FixedSizeDAO.Builder(x)
@@ -236,27 +236,27 @@ p({
 
 p({
   "class": "foam.core.boot.CSpec",
-  "name": "sfManager",
+  "name": "safManager",
   "lazy": false,
   "service": {
-    "class": "foam.core.medusa.sf.MedusaSFManager",
+    "class": "foam.core.medusa.saf.MedusaSAFManager",
     "replayStrategy": 30
   }
 })
 
 p({
   "class": "foam.core.boot.CSpec",
-  "name": "sfBroadcastReceiverDAO",
+  "name": "safBroadcastReceiverDAO",
   "serve": true,
   "serviceScript": `
     return new foam.dao.EasyDAO.Builder(x)
-      .setOf(foam.box.sf.SFEntry.getOwnClassInfo())
+      .setOf(foam.core.saf.SAFEntry.getOwnClassInfo())
       .setNullify(true)
       .setCluster(false)
       .setRuler(false)
       .setPm(true)
-      .setDelegate(new foam.core.medusa.sf.SFBroadcastReceiverDAO.Builder(x)
-        .setDelegate(new foam.dao.NullDAO(x, foam.box.sf.SFEntry.getOwnClassInfo()))
+      .setDelegate(new foam.core.medusa.saf.SAFBroadcastReceiverDAO.Builder(x)
+        .setDelegate(new foam.dao.NullDAO(x, foam.core.saf.SAFEntry.getOwnClassInfo()))
       .build())
       .build();
    `
@@ -280,7 +280,7 @@ p({
     return new foam.dao.EasyDAO.Builder(x)
       .setOf(foam.core.analytics.Candlestick.getOwnClassInfo())
       .setAuthorize(false)
-      .setSAF(true)
+      .setSaf(true)
       .build();
   """
 })
@@ -309,7 +309,7 @@ p({
     return new foam.dao.EasyDAO.Builder(x)
       .setOf(foam.core.analytics.Candlestick.getOwnClassInfo())
       .setAuthorize(false)
-      .setSAF(true)
+      .setSaf(true)
       .setDecorator(new foam.core.alarming.CandlestickAlarmDAO.Builder(x)
         .setDelegate(new foam.dao.NullDAO(x, foam.core.analytics.Candlestick.getOwnClassInfo())).build())
       .build();
@@ -336,7 +336,7 @@ p({
     return new foam.dao.EasyDAO.Builder(x)
       .setOf(foam.core.analytics.Candlestick.getOwnClassInfo())
       .setAuthorize(false)
-      .setSAF(true)
+      .setSaf(true)
       .build();
   """
 })
@@ -363,7 +363,7 @@ p({
       .setAuthorize(false)
       .setJournalType(foam.dao.JournalType.SINGLE_JOURNAL)
       .setJournalName("comDaily")
-      .setSAF(true)
+      .setSaf(true)
       .build();
   """
 })
@@ -438,24 +438,24 @@ p({
     `,
   "client":"{\"of\":\"foam.core.medusa.test.MedusaTestObject\"}"
 })
-p({
-  "class":"foam.core.boot.CSpec",
-  "name":"sfTestObjectDAO",
-  "lazy":false,
-  "serve":true,
-  "serviceScript":`
-    return new foam.dao.EasyDAO.Builder(x)
-      .setPm(true)
-      .setAuthorize(true)
-      .setJournalType(foam.dao.JournalType.SINGLE_JOURNAL)
-      .setJournalName("sftestobjects")
-      .setSAF(true)
-      .setFuid(true)
-      .setOf(foam.box.sf.SFTestObject.getOwnClassInfo())
-      .build();
-    `,
-  "client":"{\"of\":\"foam.box.sf.SFTestObject\"}"
-})
+// p({
+//   "class":"foam.core.boot.CSpec",
+//   "name":"safTestObjectDAO",
+//   "lazy":false,
+//   "serve":true,
+//   "serviceScript":`
+//     return new foam.dao.EasyDAO.Builder(x)
+//       .setPm(true)
+//       .setAuthorize(true)
+//       .setJournalType(foam.dao.JournalType.SINGLE_JOURNAL)
+//       .setJournalName("saftestobjects")
+//       .setSaf(true)
+//       .setFuid(true)
+//       .setOf(foam.core.saf.SAFTestObject.getOwnClassInfo())
+//       .build();
+//     `,
+//   "client":"{\"of\":\"foam.core.saf.SAFTestObject\"}"
+// })
 
 p({
   "class":"foam.core.boot.CSpec",
@@ -466,7 +466,7 @@ p({
       .setOf(foam.core.medusa.CSpecLookup.getOwnClassInfo())
       .setJournalType(foam.dao.JournalType.SINGLE_JOURNAL)
       .setJournalName("nspeclookups")
-      .setSAF(false)
+      .setSaf(false)
       .setCluster(false)
       .setRuler(false)
       .build();

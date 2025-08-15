@@ -47,8 +47,8 @@ foam.CLASS({
       name: 'delegate',
       transient: true,
       javaFactory: `
-      ClusterConfigSupport support = (ClusterConfigSupport) getX().get("clusterConfigSupport");
-      DAO dao = support.getBroadcastClientDAO(getX(), getServiceName(), getMyConfig(), getToConfig());
+      ClusterConfigSupport support = (ClusterConfigSupport) foam.lang.XLocator.get().get("clusterConfigSupport");
+      DAO dao = support.getBroadcastClientDAO(foam.lang.XLocator.get(), getServiceName(), getMyConfig(), getToConfig());
       return dao;
       `
     }

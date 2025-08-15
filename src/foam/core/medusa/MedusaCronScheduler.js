@@ -51,7 +51,7 @@ enabled jobs are copied to the cronjob dao.`,
       if ( support != null &&
            support.isReplaying(x) ) {
         logger.debug("execute", "replaying");
-        Timer timer = new Timer(this.getClass().getSimpleName());
+        Timer timer = new Timer(this.getClass().getSimpleName(), true);
         timer.schedule(
           new AgencyTimerTask(x, this),
           getInitialTimerDelay());

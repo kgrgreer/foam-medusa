@@ -7,12 +7,14 @@ p({
   import foam.core.app.Mode;
   import foam.core.app.AppConfig;
 
-  logger = (foam.core.logger.Logger) x.get("logger");
+  logger = foam.core.logger.StdoutLogger.instance();
   appConfig = x.get("appConfig");
   title = foam.core.app.AppConfig.class.getPackage().getImplementationTitle();
   if ( foam.util.SafetyUtil.isEmpty(appConfig.getName()) &&
        ! foam.util.SafetyUtil.isEmpty(title) ) {
     appConfig.setName(title);
+  } else {
+    appConfig.setName(System.getProperty("app.name", "unknown"));
   }
   version = foam.core.app.AppConfig.class.getPackage().getImplementationVersion();
   if ( ! foam.util.SafetyUtil.isEmpty(version) ) {

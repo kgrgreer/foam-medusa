@@ -1,6 +1,7 @@
 foam.POM({
   name:'mm',
   projects: [
+    { name: "../../../foam-saf/pom" },
     { name: '../m/pom' }
   ],
   files: [

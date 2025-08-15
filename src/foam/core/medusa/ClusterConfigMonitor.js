@@ -43,17 +43,20 @@ foam.CLASS({
   ],
 
   axioms: [
-    foam.pattern.Singleton.create(),
-    {
-      name: 'javaExtras',
-      buildJavaClass: function(cls) {
-        cls.extras.push(foam.java.Code.create({
-          data: `
-          `
-        }));
-      }
-    }
+    foam.pattern.Singleton.create()
   ],
+  // axioms: [
+  //   foam.pattern.Singleton.create(),
+  //   {
+  //     name: 'javaExtras',
+  //     buildJavaClass: function(cls) {
+  //       cls.extras.push(foam.java.Code.create({
+  //         data: `
+  //         `
+  //       }));
+  //     }
+  //   }
+  // ],
 
   properties: [
     {
