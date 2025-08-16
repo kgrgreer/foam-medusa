@@ -80,10 +80,10 @@ foam.CLASS({
       javaCode: `
       ClusterConfigSupport support = (ClusterConfigSupport) x.get("clusterConfigSupport");
       ClusterConfig myConfig = support.getConfig(x, support.getConfigId());
-      ClusterConfig config = support.getConfig(x, support.getConfigId());
+      ClusterConfig config = support.getConfig(x, id);
       SAFMedusaClientDAO saf = new SAFMedusaClientDAO(x);
-      saf.setId(config.getId());
-      saf.setFileName(config.getId());
+      saf.setId(id);
+      saf.setFileName(id);
       saf.setMyConfig(myConfig);
       saf.setToConfig(config);
       // foam-saf uses this, does medusa need it?
