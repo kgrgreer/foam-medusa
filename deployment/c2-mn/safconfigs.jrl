@@ -1,8 +1,8 @@
 p({
   "class":"foam.core.saf.SAFConfig",
-  "id":"mediator1",
-  "name":"mediator1",
-  "enabled":true,
+  "id":"node1",
+  "name":"node1",
+  "enabled":false,
   "sessionId":"4BFDD224-774E-4716-8508-43FA72E003D9",
   "created":"2020-03-28T14:57:12.959Z",
   "createdBy":2
@@ -10,9 +10,9 @@ p({
 
 p({
   "class":"foam.core.saf.SAFConfig",
-  "id":"mediator2",
-  "name":"mediator2",
-  "enabled":true,
+  "id":"node2",
+  "name":"node2",
+  "enabled":false,
   "sessionId":"B02CCBCD-2F54-4B1E-821A-85A9A1695116",
   "created":"2020-03-28T14:57:12.959Z",
   "createdBy":2

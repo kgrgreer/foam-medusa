@@ -5,13 +5,3 @@ p({
   "lazy":false,
   "serviceClass":"foam.core.medusa.ClusterConfigMonitor"
 })
-p({
-  "class": "foam.core.boot.CSpec",
-  "name": "healthHeartbeatService",
-  "enabled": false
-})
-p({
-  "class": "foam.core.boot.CSpec",
-  "name": "healthHeartbeatMonitor",
-  "enabled": false
-})
