@@ -7,11 +7,8 @@
 foam.POM({
   name: "cron",
   files: [
-    { name: "CronDAO",
-      flags: "js|java" },
-    { name: "CronJobDAO",
-      flags: "js|java" },
-    { name: "CronRefines",
-      flags: "js|java" }
+    { name: "CronDAO",                              flags: "js|java" },
+    { name: "CronJobDAO",                           flags: "js|java" },
+    { name: "CronRefines",                          flags: "js|java" }
   ]
 });

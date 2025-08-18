@@ -100,7 +100,10 @@ and waits on a response.`,
         // a session update from SessionServerBox. The session dao
         // is clustered and the put arrives here to be clustered.
         // During replay the operation can not be supported.
-        throw new MedusaException("Replaying");
+        Loggers.logger(x, this).warning("update,replaying,discard",dop,obj);
+        // NOTE: do not throw, fails startup.
+        // throw new MedusaException("Replaying");
+        return obj;
       }
 
       ClusterConfigSupport support = (ClusterConfigSupport) x.get("clusterConfigSupport");

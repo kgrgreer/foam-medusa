@@ -213,7 +213,7 @@ foam.CLASS({
       documentation: 'Start as a COREService',
       name: 'start',
       javaCode: `
-      Timer timer = new Timer(this.getClass().getSimpleName(), true);
+      Timer timer = new Timer(this.getClass().getSimpleName());
       setTimer(timer);
       timer.schedule(
         new ContextAgentTimerTask(getX(), this),

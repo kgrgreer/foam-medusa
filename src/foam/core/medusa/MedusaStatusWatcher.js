@@ -7,41 +7,25 @@
 foam.CLASS({
   package: 'foam.core.medusa',
   name: 'MedusaStatusWatcher',
+  extends: 'foam.core.fs.Watcher',
 
-  implements: [
-    'foam.lang.ContextAgent',
-    'foam.core.COREService'
-  ],
-
-  documentation: 'Monitor the etc directory for the apperance of a file named OFFLINE which will trigger the instance to transition to OFFLINE.  This will allow ssh control of an mediator or node.',
+  documentation: 'Monitor watch directory for the apperance of a file named OFFLINE which will trigger the instance to transition to OFFLINE.  This will allow ssh control of an mediator or node.',
 
   javaImports: [
-    'foam.lang.Agency',
-    'foam.lang.AgencyTimerTask',
-    'foam.lang.ContextAgent',
-    'foam.lang.FObject',
-    'foam.lang.X',
-    'foam.dao.DAO',
-    'foam.core.fs.Storage',
-    'foam.core.logger.PrefixLogger',
     'foam.core.logger.Logger',
-    'foam.core.pm.PM',
+    'foam.core.logger.Loggers',
+    'foam.dao.DAO',
+    'foam.lang.X',
     'foam.util.SafetyUtil',
     'java.util.ArrayList',
     'java.util.Arrays',
     'java.util.List',
-    'java.util.Timer',
     'java.util.stream.Collectors',
     'java.io.File',
     'java.io.IOException',
     'java.nio.file.Files',
     'java.nio.file.Path',
-    'java.nio.file.Paths',
-    'java.nio.file.FileSystems',
-    'java.nio.file.WatchEvent',
-    'java.nio.file.WatchKey',
-    'java.nio.file.WatchService',
-    'java.nio.file.StandardWatchEventKinds'
+    'java.nio.file.Paths'
   ],
 
   constants: [
@@ -56,6 +40,7 @@ foam.CLASS({
       value: 'OFFLINE'
     },
     {
+
       name: 'SHUTDOWN',
       type: 'String',
       value: 'SHUTDOWN'
@@ -74,84 +59,30 @@ foam.CLASS({
 
   properties: [
     {
-      name: 'watchDir',
-      class: 'String',
-      javaFactory: 'return System.getProperty("java.io.tmpdir", "/tmp");'
-    },
-   {
       name: 'initialTimerDelay',
       class: 'Int',
       value: 60000
-   },
-    {
-      documentation: 'Store reference to timer so it can be cancelled, and agent restarted.',
-      name: 'timer',
-      class: 'Object',
-      visibility: 'HIDDEN',
-      networkTransient: true
     }
  ],
 
   methods: [
     {
-      documentation: 'Start as a COREService',
-      name: 'start',
+      name: 'acceptRequest',
       javaCode: `
-      ClusterConfigSupport support = (ClusterConfigSupport) getX().get("clusterConfigSupport");
-      Timer timer = new Timer(this.getClass().getSimpleName(), true);
-      setTimer(timer);
-      timer.schedule(
-        new AgencyTimerTask(getX(), support.getThreadPoolName(), this),
-        getInitialTimerDelay());
+      return ONLINE.equals(request) ||
+           OFFLINE.equals(request) ||
+           SHUTDOWN.equals(request) ||
+           DISSOLVE.equals(request) ||
+           SIR.equals(request);
       `
     },
     {
-      name: 'execute',
-      args: 'Context x',
+      name: 'handleRequest',
       javaCode: `
-      Logger logger = new PrefixLogger(new Object[] {
-          this.getClass().getSimpleName()
-        }, (Logger) x.get("logger"));
-      logger.info("execute", getWatchDir());
-      try {
-        Path existing = Paths.get(getWatchDir(), OFFLINE);
-        Files.deleteIfExists(existing);
-        existing.toFile().deleteOnExit();
-      } catch ( IOException e) {
-        // Can fail to delete when it was touch by root, for example.
-        logger.warning(e);
-      }
-
-      try {
-        Path existing = Paths.get(getWatchDir(), SHUTDOWN);
-        Files.deleteIfExists(existing);
-        existing.toFile().deleteOnExit();
-      } catch ( IOException e) {
-        logger.warning(e);
-      }
-
-      try {
-        WatchService watchService = FileSystems.getDefault().newWatchService();
-        Path path = Paths.get(getWatchDir());
-        path.register(
-          watchService,
-          StandardWatchEventKinds.ENTRY_CREATE
-        );
-
-        WatchKey key;
-        while ((key = watchService.take()) != null) {
-          for (WatchEvent<?> event : key.pollEvents()) {
-            if ( event.kind() == StandardWatchEventKinds.ENTRY_CREATE &&
-                 ( SHUTDOWN.equals(event.context().toString()) ||
-                   OFFLINE.equals(event.context().toString()) ||
-                   ONLINE.equals(event.context().toString()) ||
-                   DISSOLVE.equals(event.context().toString()) ||
-                   SIR.equals(event.context().toString()) ) ) {
-              logger.warning("detected", event.context());
+      Logger logger = Loggers.logger(x, this);
 
               ClusterConfigSupport support = (ClusterConfigSupport) x.get("clusterConfigSupport");
               if ( support != null ) {
-                String request = event.context().toString();
                 if ( SHUTDOWN.equals(request) ) {
                   support.setShutdown(true);
                   request = OFFLINE;
@@ -174,7 +105,8 @@ foam.CLASS({
                 } else if ( SIR.equals(request) &&
                             config.getType() == MedusaType.MEDIATOR ) {
                   try {
-                    Path file = path.resolve(event.context().toString());
+                    Path path = Paths.get(getWatchDir());
+                    Path file = path.resolve(request);
                     String contents = Files.readAllLines(file).get(0);
                     logger.info("SIR contents", contents);
                     if ( ! SafetyUtil.isEmpty(contents) ) {
@@ -193,17 +125,27 @@ foam.CLASS({
                     logger.warning("SIR processing failed", e.getMessage());
                   }
                 }
-                break;
               }
-            }
-          }
-          key.reset();
-        }
-        logger.info("exit");
-      } catch (IOException e) {
-        logger.error("exit", e);
-      } catch (InterruptedException e) {
-        // noop
+      `
+    },
+    {
+      name: 'preCleanup',
+      javaCode: `
+      try {
+        Path existing = Paths.get(getWatchDir(), OFFLINE);
+        Files.deleteIfExists(existing);
+        existing.toFile().deleteOnExit();
+      } catch ( IOException e) {
+        // Can fail to delete when it was touch by root, for example.
+        Loggers.logger(x, this).warning(e);
+      }
+
+      try {
+        Path existing = Paths.get(getWatchDir(), SHUTDOWN);
+        Files.deleteIfExists(existing);
+        existing.toFile().deleteOnExit();
+      } catch ( IOException e) {
+        Loggers.logger(x, this).warning(e);
       }
       `
     }

@@ -111,14 +111,15 @@ foam.CLASS({
       synchronized ( lock_ ) {
         while ( maybeBlock(x) ) {
           PM pm = PM.create(x, this.getClass().getSimpleName(), "block", "wait");
+          Logger logger = Loggers.logger(x, this);
           try {
-            Logger logger = Loggers.logger(x, this);
             logger.debug("wait", blocked_.get());
             blocked_.getAndIncrement();
             lock_.wait();
             logger.debug("wake", blocked_.get());
           } catch (InterruptedException e) {
-            throw new RuntimeException(e);
+            logger.warning("interrupted", blocked_.get());
+            // throw new RuntimeException(e);
           } finally {
             pm.log(x);
             blocked_.getAndDecrement();

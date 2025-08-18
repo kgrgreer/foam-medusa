@@ -21,7 +21,7 @@ foam.CLASS({
       ClusterConfigSupport.BROADCAST_MEDIATORS.clear(support);
       ClusterConfigSupport.NODE_COUNT.clear(support);
       ClusterConfigSupport.NODE_QUORUM.clear(support);
-      ClusterConfigSupport.SF_BROADCAST_MEDIATORS.clear(support);
+      ClusterConfigSupport.SAF_BROADCAST_MEDIATORS.clear(support);
       return nu;
       `
     }

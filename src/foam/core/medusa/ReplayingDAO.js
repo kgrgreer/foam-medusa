@@ -102,7 +102,7 @@ foam.CLASS({
             }
 
             StringBuilder report = new StringBuilder();
-            report.append("instance,replayed,promoted,duration s,replayed/s,promoted/s,minutes,min/100K,app,java,date");
+            report.append("instance,replayed,promoted,duration s,replayed/s,promoted/s,minutes,min/1000,version,java,date");
             report.append("\\n");
             report.append(System.getProperty("hostname", "loalhost"));
             report.append(",");
@@ -179,7 +179,7 @@ foam.CLASS({
       javaCode: `
       Loggers.logger(getX(), this).info("start");
       ClusterConfigSupport support = (ClusterConfigSupport) getX().get("clusterConfigSupport");
-      Timer timer = new Timer(this.getClass().getSimpleName());
+      Timer timer = new Timer(this.getClass().getSimpleName(), true);
       setTimer(timer);
       timer.schedule(
         new AgencyTimerTask(getX(), support.getThreadPoolName(), this),
