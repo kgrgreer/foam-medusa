@@ -6,7 +6,7 @@
 foam.CLASS({
   package: 'foam.core.medusa.saf',
   name: 'SAFBroadcastDAO',
-  extends: 'foam.dao.ProxyDAO',
+  extends: 'foam.core.saf.SAFBroadcastDAO',
 
   javaImports: [
     'foam.dao.DAO',
@@ -25,31 +25,7 @@ foam.CLASS({
     'foam.lang.X'
   ],
 
-  properties: [
-    {
-      name: 'cSpec',
-      class: 'FObjectProperty',
-      of: 'foam.core.boot.CSpec'
-    }
-  ],
-
   methods: [
-    {
-      name: 'put_',
-      javaCode: `
-      FObject o = getDelegate().put_(x, obj);
-      broadcast(x, o, DOP.PUT);
-      return o;
-      `
-    },
-    {
-      name: 'remove_',
-      javaCode: `
-      FObject o = getDelegate().remove_(x, obj);
-      broadcast(x, o, DOP.REMOVE);
-      return o;
-      `
-    },
     {
       documentation: 'Broadcast to mediators',
       name: 'broadcast',
@@ -76,7 +52,7 @@ foam.CLASS({
           public void execute(X x) {
             try {
               DAO clientDAO = (DAO) safManager.getSafs().get(config.getId());
-              clientDAO.put((SAFEntry) entry.fclone());
+              clientDAO.put_(x, (SAFEntry) entry.fclone());
             } catch ( Throwable t ) {
               Loggers.logger(x, this, getCSpec().getName()).error(config.getId(), t);
             }
